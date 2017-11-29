@@ -41,7 +41,8 @@
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:text="@string/prompt_email" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -80,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:onClick="OpenReg"
-                android:text="regi"
+                android:text="@string/action_rejestration_in"
                 android:textStyle="bold" />
 
         </LinearLayout>
