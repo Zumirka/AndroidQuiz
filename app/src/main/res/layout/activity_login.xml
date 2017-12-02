@@ -38,11 +38,11 @@
                     android:id="@+id/Login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:completionHint="Login"
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:singleLine="true"
-                    android:text="@string/prompt_email" />
+                    android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
 
