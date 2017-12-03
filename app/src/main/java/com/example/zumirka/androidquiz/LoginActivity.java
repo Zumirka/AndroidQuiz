@@ -30,6 +30,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.zumirka.androidquiz.AsyncTasks.LoginBackgroundWorker;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,15 +57,15 @@ public class LoginActivity extends AppCompatActivity  {
         String login= Login.getText().toString();
         String password = Password.getText().toString();
         String type= "login";
-        BackgroundWorker backgroundWorker= new BackgroundWorker(this);
+        LoginBackgroundWorker backgroundWorker= new LoginBackgroundWorker(this);
         backgroundWorker.execute(type,login,password);
-        startActivity(new Intent(this,MainMenuActivity.class));
+
 
     }
     public void OpenReg(View view)
     {
         startActivity(new Intent(this,RegistredActivity.class));
-        finish();
     }
+
 }
 

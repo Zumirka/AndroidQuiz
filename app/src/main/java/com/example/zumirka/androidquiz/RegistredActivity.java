@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.zumirka.androidquiz.AsyncTasks.RegistredBackgroundWorker;
+
 public class RegistredActivity extends AppCompatActivity {
 
     EditText login, password,repeat_password;
@@ -29,7 +31,7 @@ public class RegistredActivity extends AppCompatActivity {
         boolean isEqualPassword=str_password.equals(str_password_repeat);
         if(isEqualPassword) {
             String type = "register";
-            BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+            RegistredBackgroundWorker backgroundWorker = new RegistredBackgroundWorker(this);
             backgroundWorker.execute(type, str_login, str_password);
 
         }
@@ -39,6 +41,10 @@ public class RegistredActivity extends AppCompatActivity {
             alert.setMessage("Hasła się różnią");
             alert.show();
         }
+    }
+    public void FinishActivity()
+    {
+        finish();
     }
 
 

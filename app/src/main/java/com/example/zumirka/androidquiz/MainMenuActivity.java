@@ -7,10 +7,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.zumirka.androidquiz.AsyncTasks.CategoryBackgroundWorker;
+
 public class MainMenuActivity extends AppCompatActivity {
     public static final int PIERWSZY_ELEMENT = 1;
     public static final int DRUGI_ELEMENT = 2;
     public static final int TRZECI_ELEMENT = 3;
+    String[] dane;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +22,9 @@ public class MainMenuActivity extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+        CategoryBackgroundWorker backgroundWorker= new CategoryBackgroundWorker(this);
+        backgroundWorker.execute("category");
+        dane=backgroundWorker.getData();
         menu.add(0, PIERWSZY_ELEMENT, 0, "Jeden");
         menu.add(1, DRUGI_ELEMENT, 0, "Dwa");
         menu.add(2, TRZECI_ELEMENT, 0, "Trzy");
