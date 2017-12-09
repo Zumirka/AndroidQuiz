@@ -6,8 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import com.example.zumirka.androidquiz.MainMenuActivity;
-import com.example.zumirka.androidquiz.RegistredActivity;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;

@@ -3,18 +3,7 @@ package com.example.zumirka.androidquiz.AsyncTasks;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v4.content.IntentCompat;
-
-import com.example.zumirka.androidquiz.LoginActivity;
-import com.example.zumirka.androidquiz.MainMenuActivity;
-import com.example.zumirka.androidquiz.RegistredActivity;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
