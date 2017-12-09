@@ -37,9 +37,6 @@ public class LoginBackgroundWorker extends AsyncTask<String,Void,String> {
         String type=params[0];
         String login_url="http://quizinz.herokuapp.com/login.php";
 
-        if(type.equals("login"))
-
-        {
             try {
                 String login= params[1];
                 String password= params[2];
@@ -77,7 +74,6 @@ public class LoginBackgroundWorker extends AsyncTask<String,Void,String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
 
         return null;
     }

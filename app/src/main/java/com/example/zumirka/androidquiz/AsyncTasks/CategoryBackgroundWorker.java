@@ -1,8 +1,7 @@
 package com.example.zumirka.androidquiz.AsyncTasks;
 
-import android.app.AlertDialog;
-import android.content.Context;
 import android.os.AsyncTask;
+import com.example.zumirka.androidquiz.MainMenuActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,31 +13,22 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-/**
- * Created by Zumirka on 03.12.2017.
- */
-
-public class CategoryBackgroundWorker extends AsyncTask<String,Void,String> {
-    Context context;
-    AlertDialog alert;
+public class CategoryBackgroundWorker extends AsyncTask<Void,Void,Void> {
+    MainMenuActivity mm;
     String[] data;
 
-   public CategoryBackgroundWorker (Context ctx)
-
+   public CategoryBackgroundWorker (MainMenuActivity MMA)
     {
-        context=ctx;
+        this.mm=MMA;
     }
 
 
     @Override
-    protected String doInBackground(String...params) {
+    protected Void doInBackground(Void... voids) {
 
-        String type=params[0];
         String getCategory_url="http://quizinz.herokuapp.com/getCategory.php";
 
 
-        if(type.equals("category"))
-        {
             try {
                 URL url = new URL(getCategory_url);
 
@@ -72,29 +62,27 @@ public class CategoryBackgroundWorker extends AsyncTask<String,Void,String> {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-                return result;
-
+                return null;
             }
             catch(MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
         return null;
     }
 
+
     @Override
     protected void onPreExecute() {
-        alert=new AlertDialog.Builder(context).create();
-        alert.setTitle("Login Status");
+
+
     }
 
     @Override
-    protected void onPostExecute(String result) {
-        alert.setMessage(result);
-        alert.show();
+    protected void onPostExecute(Void result) {
+        mm.setCategory(data);
+
 
     }
 
