@@ -7,11 +7,15 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.zumirka.androidquiz.AsyncTasks.RegistredBackgroundWorker;
+import com.example.zumirka.androidquiz.Utilities.Encryption;
+
+import java.security.NoSuchAlgorithmException;
 
 public class RegistredActivity extends AppCompatActivity {
 
     EditText login, password,repeat_password;
     AlertDialog alert;
+    Encryption en= new Encryption();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,15 +27,16 @@ public class RegistredActivity extends AppCompatActivity {
 
     }
 
-    public void OnReg(View view)
-    {
+    public void OnReg(View view) throws NoSuchAlgorithmException {
         String str_login= login.getText().toString();
         String str_password = password.getText().toString();
         String str_password_repeat=repeat_password.getText().toString();
         boolean isEqualPassword=str_password.equals(str_password_repeat);
         if(isEqualPassword) {
             String type = "register";
+            String hsh= en.CalculateHash(str_password,str_login);
             RegistredBackgroundWorker backgroundWorker = new RegistredBackgroundWorker(this);
+
             backgroundWorker.execute(type, str_login, str_password);
 
         }

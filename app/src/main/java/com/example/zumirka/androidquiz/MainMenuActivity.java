@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.zumirka.androidquiz.AsyncTasks.CategoryBackgroundWorker;
 import com.example.zumirka.androidquiz.AsyncTasks.TestDownloadBackgroundWorker;
+import com.example.zumirka.androidquiz.Utilities.Encryption;
 
 public class MainMenuActivity extends AppCompatActivity {
     String[] category;
