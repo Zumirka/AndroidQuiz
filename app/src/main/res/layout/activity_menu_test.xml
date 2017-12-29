@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.zumirka.androidquiz.MenuTestActivity">
+
+    <Button
+        android:id="@+id/StartTestBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
+        android:onClick="StartTestOnClick"
+        android:text="Rozpocznij test"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/StatsBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="Statystyki"
+        app:layout_constraintTop_toBottomOf="@+id/StartTestBtn"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/AddQuestionBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:text="Dodaj Pytanie"
+        app:layout_constraintTop_toBottomOf="@+id/StatsBtn"
+        tools:layout_editor_absoluteX="127dp" />
+
+</android.support.constraint.ConstraintLayout>

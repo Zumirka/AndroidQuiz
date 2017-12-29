@@ -48,6 +48,7 @@ public class CategoryBackgroundWorker extends AsyncTask<Void,Void,Void> {
                 }
                 bufferedReader.close();
                 httpURLConnection.disconnect();
+
                 try
                 {
                     JSONArray jsArray=new JSONArray(result);

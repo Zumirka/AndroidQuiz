@@ -28,7 +28,9 @@
         <activity
             android:name=".RegistredActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".MainMenuActivity"></activity>
+        <activity android:name=".MainMenuActivity" />
+        <activity android:name=".MenuTestActivity" />
+        <activity android:name=".TestActivity"></activity>
     </application>
 
 </manifest>
