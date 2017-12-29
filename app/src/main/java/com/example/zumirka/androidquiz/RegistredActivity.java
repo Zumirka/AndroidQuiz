@@ -39,11 +39,13 @@ public class RegistredActivity extends AppCompatActivity {
 
             backgroundWorker.execute(type, str_login, str_password);
 
+
         }
         else
         {
             alert=new AlertDialog.Builder(this).create();
-            alert.setMessage("Hasła się różnią");
+            alert.setTitle("Status Logowania:");
+            alert.setMessage("Hasła się różnią. \n Wpisz hasła poprawnie.");
             alert.show();
         }
     }

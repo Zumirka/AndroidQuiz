@@ -6,12 +6,16 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.zumirka.androidquiz.AsyncTasks.LoginBackgroundWorker;
+import com.example.zumirka.androidquiz.Utilities.Encryption;
+
+import java.security.NoSuchAlgorithmException;
 
 
 public class LoginActivity extends AppCompatActivity  {
 
 
     private EditText Login, Password;
+    Encryption en = new Encryption();
 
 
     @Override
@@ -24,10 +28,11 @@ public class LoginActivity extends AppCompatActivity  {
 
     }
 
-    public void OnLogin(View view) {
+    public void OnLogin(View view) throws NoSuchAlgorithmException {
         String login= Login.getText().toString();
         String password = Password.getText().toString();
         String type= "login";
+      //  String SHAPassword= en.CalculateHash(password,login);
         LoginBackgroundWorker backgroundWorker= new LoginBackgroundWorker(this);
         backgroundWorker.execute(type,login,password);
 
@@ -37,6 +42,6 @@ public class LoginActivity extends AppCompatActivity  {
     {
         startActivity(new Intent(this,RegistredActivity.class));
     }
-
+    public void CloseLogin(){finish();}
 }
 

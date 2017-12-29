@@ -2,6 +2,8 @@ package com.example.zumirka.androidquiz.AsyncTasks;
 
 import android.os.AsyncTask;
 import com.example.zumirka.androidquiz.MainMenuActivity;
+import com.example.zumirka.androidquiz.Model.Category;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,10 +14,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryBackgroundWorker extends AsyncTask<Void,Void,Void> {
     MainMenuActivity mm;
-    String[] data;
+   List<Category> categoriesList=new ArrayList<>();
+
 
    public CategoryBackgroundWorker (MainMenuActivity MMA)
     {
@@ -53,11 +58,15 @@ public class CategoryBackgroundWorker extends AsyncTask<Void,Void,Void> {
                 {
                     JSONArray jsArray=new JSONArray(result);
                     JSONObject jsObject=null;
-                    data=new String[jsArray.length()];
+
                     for(int i=0;i<jsArray.length();i++)
                     {
+                        Category category= new Category();
                         jsObject=jsArray.getJSONObject(i);
-                        data[i]=jsObject.getString("Name");
+
+                        category.setCategoryID(jsObject.getInt("Id"));
+                        category.setNameOFCategory(jsObject.getString("Name"));
+                        categoriesList.add(category);
                     }
 
                 } catch (JSONException e) {
@@ -82,7 +91,7 @@ public class CategoryBackgroundWorker extends AsyncTask<Void,Void,Void> {
 
     @Override
     protected void onPostExecute(Void result) {
-        mm.setCategory(data);
+        mm.setCategory(categoriesList);
 
 
     }
@@ -91,8 +100,5 @@ public class CategoryBackgroundWorker extends AsyncTask<Void,Void,Void> {
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
     }
-    public String[] getData()
-    {
-        return data;
-    }
+
 }

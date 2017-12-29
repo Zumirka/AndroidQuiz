@@ -24,6 +24,7 @@ public class LoginBackgroundWorker extends AsyncTask<String,Void,String> {
     AlertDialog alert;
     String[] data;
 
+
     public LoginBackgroundWorker (Context ctx)
 
     {

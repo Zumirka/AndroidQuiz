@@ -81,7 +81,7 @@ public class RegistredBackgroundWorker extends AsyncTask<String,Void,String> {
     @Override
     protected void onPreExecute() {
         alert=new AlertDialog.Builder(context).create();
-        alert.setTitle("Login Status");
+        alert.setTitle("Status Logowania:");
         alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {

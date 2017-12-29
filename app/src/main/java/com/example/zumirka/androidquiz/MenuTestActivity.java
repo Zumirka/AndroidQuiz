@@ -19,10 +19,12 @@ public class MenuTestActivity extends AppCompatActivity {
     }
     public void StartTestOnClick(View view)
     {
-        Toast.makeText(getApplicationContext(),
-                SelectedCategory, Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this, TestActivity.class);
         i.putExtra("category", SelectedCategory);
         startActivity(i);
+    }
+    public void StartStatisticActivity(View view)
+    {
+        startActivity(new Intent(this,StatisticActivity.class));
     }
 }

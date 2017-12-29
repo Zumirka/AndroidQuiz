@@ -30,7 +30,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".MainMenuActivity" />
         <activity android:name=".MenuTestActivity" />
-        <activity android:name=".TestActivity"></activity>
+        <activity android:name=".TestActivity" />
+        <activity android:name=".StatisticActivity"></activity>
     </application>
 
 </manifest>
