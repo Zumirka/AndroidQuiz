@@ -20,13 +20,14 @@ public class MainMenuActivity extends AppCompatActivity {
    List<Category> categoryList=new ArrayList<>();
     GridView gridViewButtons;
     String SelectedCategory="";
+    int IdCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         takeCategory();
-        gridViewButtons = (GridView) findViewById(R.id.GridViewButtons);
+        gridViewButtons =  findViewById(R.id.GridViewButtons);
     }
 
     public void setCategory(List<Category> category) {
@@ -44,7 +45,13 @@ public class MainMenuActivity extends AppCompatActivity {
 
             gridViewButtons.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                    SelectedCategory = parent.getItemAtPosition(position).toString();
+                   SelectedCategory = parent.getItemAtPosition(position).toString();
+
+                    for(int i=0;i<categoryList.size();i++) {
+
+                        if (SelectedCategory==categoryList.get(i).getCategory())
+                            IdCategory=  categoryList.get(i).getCategoryId();
+                    }
                     MenuTestActivityStart();
 
                 }
@@ -59,7 +66,8 @@ public class MainMenuActivity extends AppCompatActivity {
 
     public void MenuTestActivityStart() {
         Intent i = new Intent(this, MenuTestActivity.class);
-        i.putExtra("category", SelectedCategory);
+
+        i.putExtra("IdCategory", IdCategory);
         startActivity(i);
 
     }

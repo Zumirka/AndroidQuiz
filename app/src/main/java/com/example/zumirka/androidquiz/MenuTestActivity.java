@@ -9,18 +9,18 @@ import android.widget.Toast;
 
 public class MenuTestActivity extends AppCompatActivity {
 
-    String SelectedCategory;
+    int IdCategory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_test);
-        SelectedCategory=getIntent().getStringExtra("category");
+        getIntent().getIntExtra("IdCategory",IdCategory);
 
     }
     public void StartTestOnClick(View view)
     {
         Intent i = new Intent(this, TestActivity.class);
-        i.putExtra("category", SelectedCategory);
+        i.putExtra("IdCategory", IdCategory);
         startActivity(i);
     }
     public void StartStatisticActivity(View view)
