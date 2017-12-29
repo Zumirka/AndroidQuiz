@@ -11,7 +11,7 @@ import com.example.zumirka.androidquiz.AsyncTasks.TestDownloadBackgroundWorker;
 
 public class TestActivity extends AppCompatActivity {
 
-    int IdCategory;
+    int IdCategory,IdofCategory;
     int difficulty=0;
     Button LatwyBtn,SredniBtn,TrudnyBtn;
     TextView tekst;
@@ -19,7 +19,7 @@ public class TestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-        getIntent().getIntExtra("IdCategory",IdCategory);
+        IdofCategory=getIntent().getIntExtra("IdCategory",IdCategory);
         LatwyBtn =(Button) findViewById(R.id.LatwyBtn);
         LatwyBtn.setOnClickListener(ClickButtons);
         SredniBtn= findViewById(R.id.SredniBtn);
