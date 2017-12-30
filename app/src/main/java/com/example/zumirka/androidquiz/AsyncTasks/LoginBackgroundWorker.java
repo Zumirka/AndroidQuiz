@@ -83,19 +83,28 @@ public class LoginBackgroundWorker extends AsyncTask<String,Void,String> {
     protected void onPreExecute() {
         alert=new AlertDialog.Builder(context).create();
         alert.setTitle("Login Status");
-        alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                context.startActivity(new Intent(context,MainMenuActivity.class));
-            }
-        });
+
     }
 
     @Override
     protected void onPostExecute(String result) {
-        alert.setMessage(result);
-        alert.show();
 
+
+        if(result.equals("1")) {
+            alert.setMessage("logowanie powiodło się");
+            alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    context.startActivity(new Intent(context, MainMenuActivity.class));
+                }
+            });
+
+        }else
+        {
+            alert.setMessage("logowanie nie powiodło się");
+
+        }
+        alert.show();
     }
 
     @Override

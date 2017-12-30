@@ -37,7 +37,7 @@ public class RegistredActivity extends AppCompatActivity {
             String hsh= en.CalculateHash(str_password,str_login);
             RegistredBackgroundWorker backgroundWorker = new RegistredBackgroundWorker(this);
 
-            backgroundWorker.execute(type, str_login, str_password);
+            backgroundWorker.execute(type, str_login, hsh);
 
 
         }

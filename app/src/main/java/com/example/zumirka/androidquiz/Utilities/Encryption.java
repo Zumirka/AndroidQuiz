@@ -17,9 +17,9 @@ public class Encryption {
        String input= new StringBuilder(Password).append(Login).toString();
        byte DataByte[]=input.getBytes();
         MessageDigest md = MessageDigest.getInstance("SHA-256");
+        String base=Base64.encodeToString(md.digest(DataByte), Base64.DEFAULT);
 
-        return Base64.encodeToString(md.digest(DataByte), Base64.DEFAULT);
-
+       return  base.substring(0,base.length()-1);
     }
 }
 

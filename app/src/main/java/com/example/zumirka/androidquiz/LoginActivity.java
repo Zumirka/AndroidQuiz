@@ -32,9 +32,9 @@ public class LoginActivity extends AppCompatActivity  {
         String login= Login.getText().toString();
         String password = Password.getText().toString();
         String type= "login";
-      //  String SHAPassword= en.CalculateHash(password,login);
+        String SHAPassword= en.CalculateHash(password,login);
         LoginBackgroundWorker backgroundWorker= new LoginBackgroundWorker(this);
-        backgroundWorker.execute(type,login,password);
+        backgroundWorker.execute(type,login,SHAPassword);
 
 
     }
