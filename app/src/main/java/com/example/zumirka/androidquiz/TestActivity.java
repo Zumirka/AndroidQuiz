@@ -2,9 +2,8 @@ package com.example.zumirka.androidquiz;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.zumirka.androidquiz.AsyncTasks.TestDownloadBackgroundWorker;
@@ -13,20 +12,17 @@ public class TestActivity extends AppCompatActivity {
 
     int IdCategory,IdofCategory;
     int difficulty=0;
-    Button LatwyBtn,SredniBtn,TrudnyBtn;
+    Spinner DifficultySpinner;
+
     TextView tekst;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         IdofCategory=getIntent().getIntExtra("IdCategory",IdCategory);
-        LatwyBtn =(Button) findViewById(R.id.LatwyBtn);
-        LatwyBtn.setOnClickListener(ClickButtons);
-        SredniBtn= findViewById(R.id.SredniBtn);
-        SredniBtn.setOnClickListener(ClickButtons);
-        TrudnyBtn= findViewById(R.id.TrudnyBtn);
-        TrudnyBtn.setOnClickListener(ClickButtons);
         tekst=findViewById(R.id.textView);
+        DifficultySpinner=findViewById(R.id.spinnerDiff);
+        FillSpinner();
 
 
     }
@@ -35,34 +31,28 @@ public class TestActivity extends AppCompatActivity {
         TestDownloadBackgroundWorker test = new TestDownloadBackgroundWorker(IdCategory, difficulty);
         test.execute();
     }
-    void HideChoose()
+
+    void FillSpinner()
     {
-        LatwyBtn.setVisibility(View.GONE);
-        SredniBtn.setVisibility(View.GONE);
-        TrudnyBtn.setVisibility(View.GONE);
-        tekst.setText("");
-
-
+      ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+            R.array.planets_array, android.R.layout.simple_spinner_item);
+    // Specify the layout to use when the list of choices appears
+      adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    // Apply the adapter to the spinner
+     DifficultySpinner.setAdapter(adapter);
     }
-    View.OnClickListener ClickButtons = new View.OnClickListener() {
-        public void onClick(View v) {
-            switch(v.getId()) {
-                case R.id.LatwyBtn:
-                   difficulty=1;
-                    HideChoose();
-                    CreateTest();
-                    break;
-                case R.id.SredniBtn:
-                    difficulty=2;
-                    HideChoose();
-                    CreateTest();
-                    break;
-                case R.id.TrudnyBtn:
-                    difficulty=3;
-                    HideChoose();
-                    CreateTest();
-                    break;
-            }
-        }
-    };
+    /*
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        // An item was selected. You can retrieve the selected item using
+        // parent.getItemAtPosition(pos)
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
+    }
+
+
+    spinner.setOnItemSelectedListener(this);
+    */
 }
