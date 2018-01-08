@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="96dp"
-        android:onClick="StartTestOnClick"
-        android:text="Rozpocznij test"
+        android:onClick="SolveTestOnClick"
+        android:text="Rozwiąż test"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:onClick="StartStatisticActivity"
+        android:onClick="StartStatisticOnClick"
         android:text="Statystyki"
         app:layout_constraintTop_toBottomOf="@+id/StartTestBtn"
         tools:layout_editor_absoluteX="0dp" />
@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
         android:text="Dodaj Pytanie"
+        android:onClick="AddQuestionOnClick"
         app:layout_constraintTop_toBottomOf="@+id/StatsBtn"
         tools:layout_editor_absoluteX="127dp" />
 

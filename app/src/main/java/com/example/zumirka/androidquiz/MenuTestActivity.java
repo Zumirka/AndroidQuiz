@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class MenuTestActivity extends AppCompatActivity {
 
@@ -17,18 +15,18 @@ public class MenuTestActivity extends AppCompatActivity {
        IdofCategory= getIntent().getIntExtra("IdCategory",Id);
 
     }
-    public void StartTestOnClick(View view)
+    public void SolveTestOnClick(View view)
     {
-        Intent i = new Intent(this, TestActivity.class);
+        Intent i = new Intent(this, TestSettingsActivity.class);
         i.putExtra("IdCategory", IdofCategory);
         startActivity(i);
     }
-    public void StartStatisticActivity(View view)
+    public void StartStatisticOnClick(View view)
     {
         startActivity(new Intent(this,StatisticActivity.class));
     }
-    public void AddQuestion(View view)
+    public void AddQuestionOnClick(View view)
     {
-
+    startActivity(new Intent(this,AddQuestionActivity.class));
     }
 }

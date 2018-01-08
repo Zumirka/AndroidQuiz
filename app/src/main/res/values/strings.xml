@@ -14,7 +14,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string-array name="planets_array">
+    <string-array name="difficulty_array">
         <item>Łatwy</item>
         <item>Średni</item>
         <item>Trudny</item>
