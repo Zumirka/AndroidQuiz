@@ -19,7 +19,7 @@ import java.util.List;
 
 public class CategoryBackgroundWorker extends AsyncTask<Void,Void,Void> {
     MainMenuActivity mm;
-   List<Category> categoriesList=new ArrayList<>();
+   ArrayList<Category> categoriesList=new ArrayList<>();
 
 
    public CategoryBackgroundWorker (MainMenuActivity MMA)

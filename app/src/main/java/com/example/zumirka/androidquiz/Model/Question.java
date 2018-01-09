@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Question {
     private String content;
-    private List<Answer> answers;
+    private ArrayList<Answer> answers;
     private int difficult;
 
     public Question() {
@@ -24,7 +24,7 @@ public class Question {
         this.content = content;
     }
 
-    public List<Answer> getAnswers() {
+    public ArrayList<Answer> getAnswers() {
         return answers;
     }
 

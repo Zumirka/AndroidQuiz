@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Test {
     private String category;
-    private List<Question> questions;
+    private ArrayList<Question> questions;
     public Test() {
 
         questions=new ArrayList<>();
@@ -24,7 +24,7 @@ public class Test {
         this.category = category;
     }
 
-    public List<Question> getQuestions() {
+    public ArrayList<Question> getQuestions() {
         return questions;
     }
     public void addQuestion(Question question) {

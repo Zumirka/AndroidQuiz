@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import com.example.zumirka.androidquiz.Model.Answer;
 import com.example.zumirka.androidquiz.Model.Question;
 import com.example.zumirka.androidquiz.Model.Test;
+import com.example.zumirka.androidquiz.TestActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,10 +32,12 @@ public class TestDownloadBackgroundWorker extends AsyncTask<Void,Void,Void>{
     private Test test;
     private int caterogryId;
     private int difficult;
-    public TestDownloadBackgroundWorker(int caterogryId,int difficult)
+    private TestActivity TA;
+    public TestDownloadBackgroundWorker(int caterogryId,int difficult, TestActivity ta)
     {
         this.caterogryId=caterogryId;
         this.difficult=difficult;
+        this.TA=ta;
         test=new Test();
     }
     @Override
@@ -104,5 +107,19 @@ public class TestDownloadBackgroundWorker extends AsyncTask<Void,Void,Void>{
             e.printStackTrace();
         }
         return null;
+    }
+    @Override
+    protected void onPreExecute() {
+
+    }
+    @Override
+    protected void onPostExecute(Void result) {
+        TA.QuestionTaker(test);
+
+
+    }
+    @Override
+    protected void onProgressUpdate(Void... values) {
+        super.onProgressUpdate(values);
     }
 }
