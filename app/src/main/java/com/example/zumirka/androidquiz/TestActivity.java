@@ -1,5 +1,6 @@
 package com.example.zumirka.androidquiz;
 
+import android.icu.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,20 +14,25 @@ import com.example.zumirka.androidquiz.Model.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class TestActivity extends AppCompatActivity {
+public class TestActivity extends AppCompatActivity{
 
-    TextView QuestionText;
+    TextView QuestionText,Clock;
     int IdCategory,IdofCategory,index=0;
-    int difficulty,diff;
+    int difficulty,diff,CorrectAnswear=0;
     Test QuestionsOfTest;
     ArrayList<Question> questionsForTest;
     ArrayList<Answer> answers;
-    ArrayList<Button> AnswearButtons=new ArrayList<Button>();;
+    ArrayList<Button> AnswearButtons=new ArrayList<Button>();
+    Timer timer=new Timer();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+        Clock=findViewById(R.id.Clock);
+        startClock();
         IdCategory=getIntent().getIntExtra("IdCategory",IdofCategory);
         difficulty=getIntent().getIntExtra("Difficulty",diff);
         difficulty++;
@@ -34,6 +40,7 @@ public class TestActivity extends AppCompatActivity {
         AnswearButtons.add((Button) findViewById(R.id.Answear1));
         AnswearButtons.add((Button) findViewById(R.id.Answear2));
         AnswearButtons.add((Button) findViewById(R.id.Answear3));
+
         CreateTest();
     }
 
@@ -56,6 +63,11 @@ public class TestActivity extends AppCompatActivity {
             answers = questionsForTest.get(index).getAnswers();
 
             for (int i = 0; i < answers.size(); i++) {
+
+                if(answers.get(i).isiSTrue())
+                {
+                    CorrectAnswear++;
+                }
                 AnswearButtons.get(i).setText(answers.get(i).getContent());
             }
             index++;
@@ -63,20 +75,54 @@ public class TestActivity extends AppCompatActivity {
 
 
     }
-    public void OnClickButton(View view)
-    {
-        if(index<=answers.size()+1)
-            CreateQuestion();
-        else
-        {
-            for(int i=0;i<=AnswearButtons.size();i++)
-            {
-                AnswearButtons.get(i).setVisibility(View.GONE);
-            }
-        }
+    public void OnClickButton(View view) {
+       IfEnd();
 
     }
 
 
+    void IfEnd()
+    {
+        if (index != questionsForTest.size())
+        {
+            CreateQuestion();
+        }
+        else if(index==questionsForTest.size()){
+            for (int i = 0; i < AnswearButtons.size(); i++) {
+                AnswearButtons.get(i).setVisibility(View.GONE);
+
+            }
+            QuestionText.setText("Test Ukończono. Wynik: "+CorrectAnswear);
+        }
+    }
+    private void startClock(){
+        Thread t = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(1000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Calendar c = Calendar.getInstance();
+
+                                int hours = c.get(Calendar.HOUR_OF_DAY);
+                                int minutes = c.get(Calendar.MINUTE);
+                                int seconds = c.get(Calendar.SECOND);
+
+                                String curTime = String.format("%02d  %02d  %02d", hours, minutes, seconds);
+                                Clock.setText(curTime); //change clock to your textview
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        t.start();
+    }
 
 }

@@ -43,7 +43,7 @@
         tools:layout_editor_absoluteX="8dp" />
 
     <EditText
-        android:id="@+id/CorrectAnswerAdd"
+        android:id="@+id/Answear1C"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -54,34 +54,35 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <EditText
-        android:id="@+id/Wrong1AnswerAdd"
+        android:id="@+id/Answear2W"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@android:color/holo_red_dark"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/CorrectAnswerAdd"
+        app:layout_constraintTop_toBottomOf="@+id/Answear1C"
         tools:layout_editor_absoluteX="0dp" />
 
     <EditText
-        android:id="@+id/Wrong2AnswerAdd"
+        android:id="@+id/Answear3W"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:background="@android:color/holo_red_dark"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/Wrong1AnswerAdd"
+        app:layout_constraintTop_toBottomOf="@+id/Answear2W"
         tools:layout_editor_absoluteX="0dp" />
 
     <Button
         android:id="@+id/AddQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="40dp"
+        android:onClick="AddQuestionOnClick"
         android:text="Dodaj Pytanie"
-        app:layout_constraintTop_toBottomOf="@+id/Wrong2AnswerAdd"
-        tools:layout_editor_absoluteX="137dp" />
+        app:layout_constraintTop_toBottomOf="@+id/Answear3W"
+        tools:layout_editor_absoluteX="127dp" />
 
 </android.support.constraint.ConstraintLayout>
