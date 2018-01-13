@@ -29,10 +29,7 @@ public class MenuTestActivity extends AppCompatActivity {
         i.putExtra("Difficulty",difficulty);
         startActivity(i);
     }
- /*   public void StartStatisticOnClick(View view)
-    {
-        startActivity(new Intent(this,StatisticActivity.class));
-    }*/
+
     public void AddQuestionOnClick(View view)
     {
         Intent i = new Intent(this, AddQuestionActivity.class);

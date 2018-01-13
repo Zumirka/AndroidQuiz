@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item
+            android:id="@+id/Stats"
+            android:orderInCategory="1"
+            android:title="Statystyki">
+        </item>
+        <item
+            android:id="@+id/Creators"
+            android:orderInCategory="1"
+            android:title="O twórcach">
+        </item>
+        <item
+            android:id="@+id/AppInfo"
+            android:orderInCategory="2"
+            android:title="O Aplikacji">
+        </item>
+        <item
+            android:id="@+id/LogOut"
+            android:orderInCategory="3"
+            android:title="Wyloguj">
+        </item>
+</menu>
