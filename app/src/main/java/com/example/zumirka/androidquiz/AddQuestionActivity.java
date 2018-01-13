@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.zumirka.androidquiz.AsyncTasks.AddQuestionBackgroundWorker;
+
 import java.util.ArrayList;
 
 
@@ -17,6 +19,7 @@ public class AddQuestionActivity extends AppCompatActivity {
 
     Spinner Difficulty;
     int difficulty,IdCategory,IdofCategory;
+    String question,answ1,answ2,answ3;
     ArrayList<EditText> Controls =new ArrayList<EditText>();
     Button AddQuestions;
     @Override
@@ -44,19 +47,39 @@ public class AddQuestionActivity extends AppCompatActivity {
     public void AddQuestionOnClick(View v)
    {
        difficulty=Difficulty.getSelectedItemPosition();
-       CheckIfNotEmpty();
+       difficulty++;
+       RewriteControls();
+       if(CheckIfNotEmpty())
+       {
+           String type="addQuestion";
+           AddQuestionBackgroundWorker addqBackgroundWorker = new AddQuestionBackgroundWorker(this);
+           addqBackgroundWorker.execute(type,Integer.toString(IdCategory),Integer.toString(difficulty),question,answ1,answ2,answ3);
+       }
+
 
    }
-   void CheckIfNotEmpty()
+   void RewriteControls()
    {
+               question=Controls.get(0).getText().toString();
+               answ1=Controls.get(1).getText().toString();
+               answ2=Controls.get(2).getText().toString();
+               answ3=Controls.get(3).getText().toString();
+   }
+
+    Boolean CheckIfNotEmpty()
+   {
+       Boolean t=false;
        for(int i=0;i<Controls.size();i++)
        {
            if(Controls.get(i).getText().toString().trim().length()==0)
            {
                Controls.get(i).setError("Nie może być puste");
-               return;
+               t= false;
            }
+           else
+           t= true;
        }
+       return t;
    }
 
 }

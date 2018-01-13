@@ -51,12 +51,13 @@ public class TestActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         InitializeControls();
-        CreateTest();
         startClock();
+        checkPoints();
         IdCategory=getIntent().getIntExtra("IdCategory",IdofCategory);
         difficulty=getIntent().getIntExtra("Difficulty",diff);
         difficulty++;
-        checkPoints();
+        CreateTest();
+
 
     }
     public void AddValuesToPIEENTRY(){

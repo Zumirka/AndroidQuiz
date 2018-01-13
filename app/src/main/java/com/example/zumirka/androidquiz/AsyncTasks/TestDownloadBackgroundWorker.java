@@ -22,6 +22,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by Zumirka on 28.12.2017.
@@ -95,6 +100,7 @@ public class TestDownloadBackgroundWorker extends AsyncTask<Void,Void,Void>{
                     else a.setiSTrue(false);
                     test.getLastQuestion().addAnswer(a);
                 }
+             //   ShuffleAnswears();
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -121,5 +127,29 @@ public class TestDownloadBackgroundWorker extends AsyncTask<Void,Void,Void>{
     @Override
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
+    }
+
+    private void ShuffleAnswears()
+    {
+        for(int i=0;i<test.getQuestions().size();i++)
+        {
+            for(int j=0;j<test.getQuestions().get(i).getAnswers().size();j++)
+            {
+               shuffleArray(test.getQuestions().get(i).getAnswers());
+            }
+        }
+    }
+    private void shuffleArray (ArrayList<Answer> answears)
+    {
+        Random rnd = new Random();
+        for (int i = answears.size() - 1; i > 0; i--)
+        {
+            int index = rnd.nextInt(i + 1);
+
+            Answer a=answears.get(index);
+            answears.set(index,answears.get(i));
+            answears.set(i,a);
+        }
+
     }
 }
