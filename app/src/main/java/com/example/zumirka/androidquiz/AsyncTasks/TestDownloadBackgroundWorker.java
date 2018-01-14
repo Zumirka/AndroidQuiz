@@ -100,7 +100,7 @@ public class TestDownloadBackgroundWorker extends AsyncTask<Void,Void,Void>{
                     else a.setiSTrue(false);
                     test.getLastQuestion().addAnswer(a);
                 }
-             //   ShuffleAnswears();
+               ShuffleAnswears();
 
             } catch (Exception e) {
                 e.printStackTrace();

@@ -1,6 +1,9 @@
 package com.example.zumirka.androidquiz;
 
 import android.icu.util.Calendar;
+import android.os.Build;
+import android.os.SystemClock;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +16,9 @@ import com.example.zumirka.androidquiz.Model.Question;
 import com.example.zumirka.androidquiz.Model.Test;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -39,8 +44,8 @@ public class TestActivity extends AppCompatActivity {
     ArrayList<Question> questionsForTest;
     ArrayList<Answer> answers;
     ArrayList<Button> AnswearButtons = new ArrayList<Button>();
-    Timer timer = new Timer();
-
+    Thread t;
+    Date diffDate=new Date();
 
     PieChart pieChart;
     PieDataSet pieDataSet;
@@ -112,19 +117,19 @@ public class TestActivity extends AppCompatActivity {
             case R.id.Answear1:
                 if (answers.get(0).isiSTrue())
                 {
-                    CorrectAnswear++;
+                    CorrectAnswear+=difficulty;
                 }
                 break;
             case R.id.Answear2:
                 if (answers.get(1).isiSTrue())
                 {
-                    CorrectAnswear++;
+                    CorrectAnswear+=difficulty;
                 }
                 break;
             case R.id.Answear3:
                 if (answers.get(2).isiSTrue())
                 {
-                    CorrectAnswear++;
+                    CorrectAnswear+=difficulty;
                 }
                 break;
         }
@@ -147,8 +152,12 @@ public class TestActivity extends AppCompatActivity {
 
     private void EndOfTest() {
 
+        t.interrupt();
         EndTest = true;
-        QuestionText.setText("Test Ukończono.\n Wynik: " + CorrectAnswear + "/" + PointsCount + " punktów.\n Czas przejścia testu: ");
+        SimpleDateFormat localDateFormat = new SimpleDateFormat("HH:mm:ss");
+        String time = localDateFormat.format(diffDate);
+
+        QuestionText.setText("Test Ukończono.\n Wynik: " + CorrectAnswear + "/" + PointsCount + " punktów.\n Czas przejścia testu: "+time);
         QuestionNumber.setText("");
 
         AddValuesToPIEENTRY();
@@ -166,11 +175,15 @@ public class TestActivity extends AppCompatActivity {
         pieData.setValueFormatter(new PercentFormatter());
         pieData.setValueTextSize(10f);
         pieChart.animateY(3000);
+        Clock.setText("");
 
     }
 
     private void startClock() {
-        Thread t = new Thread() {
+
+
+       t= new Thread() {
+            long startTime=SystemClock.elapsedRealtime();
 
             @Override
             public void run() {
@@ -178,15 +191,16 @@ public class TestActivity extends AppCompatActivity {
                     while (!isInterrupted()) {
                         Thread.sleep(1000);
                         runOnUiThread(new Runnable() {
+
                             @Override
                             public void run() {
-                                Calendar c = Calendar.getInstance();
-
-                                int hours = c.get(Calendar.HOUR_OF_DAY);
-                                int minutes = c.get(Calendar.MINUTE);
-                                int seconds = c.get(Calendar.SECOND);
-
-                                String curTime = String.format("%02d  %02d  %02d", hours, minutes, seconds);
+                                long now=SystemClock.elapsedRealtime();
+                                long diff=now-startTime;
+                                diffDate.setTime(diff);
+                                int hours = diffDate.getHours();
+                                int minutes = diffDate.getMinutes();
+                                int seconds = diffDate.getSeconds();
+                                String curTime = String.format("%02d : %02d : %02d", hours, minutes, seconds);
                                 Clock.setText(curTime); //change clock to your textview
                             }
                         });
@@ -200,7 +214,7 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void InitializeControls() {
-        Clock = findViewById(R.id.Clock);
+        Clock = findViewById(R.id.ClockView);
         QuestionText = findViewById(R.id.Question);
         AnswearButtons.add((Button) findViewById(R.id.Answear1));
         AnswearButtons.add((Button) findViewById(R.id.Answear2));

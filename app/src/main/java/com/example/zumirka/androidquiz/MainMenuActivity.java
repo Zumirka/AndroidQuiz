@@ -32,6 +32,7 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         takeCategory();
         gridViewButtons =  findViewById(R.id.GridViewButtons);
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
