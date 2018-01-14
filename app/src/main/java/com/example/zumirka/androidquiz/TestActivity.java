@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Logger;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarEntry;
@@ -26,23 +27,23 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
-public class TestActivity extends AppCompatActivity{
+public class TestActivity extends AppCompatActivity {
 
-    TextView QuestionText,Clock,QuestionNumber;
-    int IdCategory,IdofCategory,index=0,PointsCount=0;
-    int difficulty,diff,CorrectAnswear=0;
+    TextView QuestionText, Clock, QuestionNumber;
+    int IdCategory, IdofCategory, index = 0, PointsCount = 0;
+    int difficulty, diff, CorrectAnswear = 0;
     Test QuestionsOfTest;
-    Boolean EndTest=false;
-    ArrayList<Entry> entries ;
+    Boolean EndTest = false;
+    ArrayList<Entry> entries;
     ArrayList<String> PieEntryLabels;
     ArrayList<Question> questionsForTest;
     ArrayList<Answer> answers;
-    ArrayList<Button> AnswearButtons=new ArrayList<Button>();
-    Timer timer=new Timer();
+    ArrayList<Button> AnswearButtons = new ArrayList<Button>();
+    Timer timer = new Timer();
 
 
-    PieChart pieChart ;
-    PieDataSet pieDataSet ;
+    PieChart pieChart;
+    PieDataSet pieDataSet;
     PieData pieData;
 
 
@@ -52,23 +53,23 @@ public class TestActivity extends AppCompatActivity{
         setContentView(R.layout.activity_test);
         InitializeControls();
         startClock();
-        checkPoints();
-        IdCategory=getIntent().getIntExtra("IdCategory",IdofCategory);
-        difficulty=getIntent().getIntExtra("Difficulty",diff);
+        IdCategory = getIntent().getIntExtra("IdCategory", IdofCategory);
+        difficulty = getIntent().getIntExtra("Difficulty", diff);
         difficulty++;
         CreateTest();
 
 
     }
-    public void AddValuesToPIEENTRY(){
-        int PercentValue=CorrectAnswear*100/PointsCount;
-        entries.add(new BarEntry(PercentValue , 0));
-        entries.add(new BarEntry((100-PercentValue), 1));
+
+    public void AddValuesToPIEENTRY() {
+        int PercentValue = CorrectAnswear * 100 / PointsCount;
+        entries.add(new BarEntry(PercentValue, 0));
+        entries.add(new BarEntry((100 - PercentValue), 1));
 
 
     }
 
-    public void AddValuesToPieEntryLabels(){
+    public void AddValuesToPieEntryLabels() {
 
         PieEntryLabels.add("Dobre odpowiedzi");
         PieEntryLabels.add("Złe odpowiedzi");
@@ -78,71 +79,64 @@ public class TestActivity extends AppCompatActivity{
 
 
     void CreateTest() {
-        TestDownloadBackgroundWorker test = new TestDownloadBackgroundWorker(IdCategory, difficulty,this);
+        TestDownloadBackgroundWorker test = new TestDownloadBackgroundWorker(IdCategory, difficulty, this);
         test.execute();
     }
-   public void QuestionTaker(Test testGenerate)
-    {
-        this.QuestionsOfTest=testGenerate;
-        questionsForTest=QuestionsOfTest.getQuestions();
+
+    public void QuestionTaker(Test testGenerate) {
+        this.QuestionsOfTest = testGenerate;
+        questionsForTest = QuestionsOfTest.getQuestions();
         CreateQuestion();
 
     }
-    void checkPoints()
-    {
-      /*  ArrayList<Answer> answer=new ArrayList<>();
-        for (int j=0;j< questionsForTest.size();j++) {
-            answer = questionsForTest.get(j).getAnswers();
-            for (int i = 0; i < answers.size(); i++) {
-                if (answers.get(i).isiSTrue()) {
-                    PointsCount++;
-                }
-            }
-        }*/
-      if(difficulty==1)
-        {
-            PointsCount=10;
-        }
-        else if(difficulty==2)
-        {
-            PointsCount=20;
-        }
-        else
-        {
-            PointsCount=30;
-        }
-    }
-    private void CreateQuestion()
-    {
-            QuestionText.setText(questionsForTest.get(index).getContent());
-            answers = questionsForTest.get(index).getAnswers();
-            for (int i = 0; i < answers.size(); i++) {
 
-                if(answers.get(i).isiSTrue())
+    private void CreateQuestion() {
+        QuestionText.setText(questionsForTest.get(index).getContent());
+        answers = questionsForTest.get(index).getAnswers();
+        for (int i = 0; i < answers.size(); i++) {
+
+            if (answers.get(i).isiSTrue()) {
+                PointsCount += difficulty;
+
+            }
+            AnswearButtons.get(i).setText(answers.get(i).getContent());
+        }
+        index++;
+        QuestionNumber.setText(Integer.toString(index) + "/" + Integer.toString(questionsForTest.size()));
+
+
+    }
+
+    public void OnClickButton(View view) {
+        switch (view.getId()) {
+            case R.id.Answear1:
+                if (answers.get(0).isiSTrue())
                 {
                     CorrectAnswear++;
                 }
-                AnswearButtons.get(i).setText(answers.get(i).getContent());
-            }
-            index++;
-            QuestionNumber.setText(Integer.toString(index)+"/"+Integer.toString(questionsForTest.size()));
-
-
-
-    }
-    public void OnClickButton(View view) {
-       IfEnd();
-
-    }
-
-
-    private void IfEnd()
-    {
-        if (index != questionsForTest.size())
-        {
-            CreateQuestion();
+                break;
+            case R.id.Answear2:
+                if (answers.get(1).isiSTrue())
+                {
+                    CorrectAnswear++;
+                }
+                break;
+            case R.id.Answear3:
+                if (answers.get(2).isiSTrue())
+                {
+                    CorrectAnswear++;
+                }
+                break;
         }
-        else if(index==questionsForTest.size()){
+        IfEnd();
+
+    }
+
+
+    private void IfEnd() {
+        if (index != questionsForTest.size()) {
+            CreateQuestion();
+        } else if (index == questionsForTest.size()) {
             for (int i = 0; i < AnswearButtons.size(); i++) {
                 AnswearButtons.get(i).setVisibility(View.GONE);
 
@@ -150,11 +144,11 @@ public class TestActivity extends AppCompatActivity{
             EndOfTest();
         }
     }
-    private void EndOfTest()
-    {
 
-        EndTest=true;
-        QuestionText.setText("Test Ukończono.\n Wynik: "+CorrectAnswear+"/"+PointsCount+" punktów.\n Czas przejścia testu: ");
+    private void EndOfTest() {
+
+        EndTest = true;
+        QuestionText.setText("Test Ukończono.\n Wynik: " + CorrectAnswear + "/" + PointsCount + " punktów.\n Czas przejścia testu: ");
         QuestionNumber.setText("");
 
         AddValuesToPIEENTRY();
@@ -167,14 +161,15 @@ public class TestActivity extends AppCompatActivity{
 
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
-       pieChart.setData(pieData);
+        pieChart.setData(pieData);
         pieChart.setDescription("");
         pieData.setValueFormatter(new PercentFormatter());
         pieData.setValueTextSize(10f);
         pieChart.animateY(3000);
 
     }
-    private void startClock(){
+
+    private void startClock() {
         Thread t = new Thread() {
 
             @Override
@@ -203,10 +198,10 @@ public class TestActivity extends AppCompatActivity{
 
         t.start();
     }
-    private void InitializeControls()
-    {
-        Clock=findViewById(R.id.Clock);
-        QuestionText=findViewById(R.id.Question);
+
+    private void InitializeControls() {
+        Clock = findViewById(R.id.Clock);
+        QuestionText = findViewById(R.id.Question);
         AnswearButtons.add((Button) findViewById(R.id.Answear1));
         AnswearButtons.add((Button) findViewById(R.id.Answear2));
         AnswearButtons.add((Button) findViewById(R.id.Answear3));
@@ -214,7 +209,7 @@ public class TestActivity extends AppCompatActivity{
         pieChart.setVisibility(View.GONE);
         entries = new ArrayList<>();
         PieEntryLabels = new ArrayList<String>();
-        QuestionNumber=findViewById(R.id.QuestionNumber);
+        QuestionNumber = findViewById(R.id.QuestionNumber);
 
 
     }

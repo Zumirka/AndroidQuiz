@@ -4,6 +4,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
+import android.widget.Toast;
+
+import com.example.zumirka.androidquiz.RegistredActivity;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -21,11 +25,14 @@ public class RegistredBackgroundWorker extends AsyncTask<String,Void,String> {
     Context context;
     AlertDialog alert;
     String[] data;
+    RegistredActivity re;
 
-    public RegistredBackgroundWorker (Context ctx)
+    public RegistredBackgroundWorker(RegistredActivity reg, Context con)
 
     {
-        context=ctx;
+       this.re=reg;
+       this.context=con;
+
     }
 
 
@@ -80,20 +87,12 @@ public class RegistredBackgroundWorker extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPreExecute() {
-        alert=new AlertDialog.Builder(context).create();
-        alert.setTitle("Status Logowania:");
-        alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-
-            }
-        });
     }
 
     @Override
     protected void onPostExecute(String result) {
-        alert.setMessage(result);
-        alert.show();
+        Toast.makeText(context, "Zostałeś zarejestrowany.\n Możesz się zalogować.", Toast.LENGTH_LONG).show();
+         re.finish();
 
     }
 
