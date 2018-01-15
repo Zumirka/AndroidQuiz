@@ -24,6 +24,7 @@ public class LoginBackgroundWorker extends AsyncTask<String,Void,String> {
     Context context;
     AlertDialog alert;
     String[] data;
+    String login;
 
 
     public LoginBackgroundWorker (Context ctx)
@@ -41,7 +42,7 @@ public class LoginBackgroundWorker extends AsyncTask<String,Void,String> {
         String login_url="http://quizinz.herokuapp.com/login.php";
 
             try {
-                String login= params[1];
+                login= params[1];
                 String password= params[2];
                 URL url = new URL(login_url);
                 try {

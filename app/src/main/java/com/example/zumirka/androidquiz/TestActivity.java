@@ -1,5 +1,6 @@
 package com.example.zumirka.androidquiz;
 
+import android.content.SharedPreferences;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.SystemClock;
@@ -9,7 +10,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.zumirka.androidquiz.AsyncTasks.AddStatisticBackgroundWorker;
 import com.example.zumirka.androidquiz.AsyncTasks.TestDownloadBackgroundWorker;
 import com.example.zumirka.androidquiz.Model.Answer;
 import com.example.zumirka.androidquiz.Model.Question;
@@ -35,10 +38,11 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 public class TestActivity extends AppCompatActivity {
 
     TextView QuestionText, Clock, QuestionNumber;
+    String time,userName="";
     int IdCategory, IdofCategory, index = 0, PointsCount = 0;
     int difficulty, diff, CorrectAnswear = 0;
     Test QuestionsOfTest;
-    Boolean EndTest = false;
+    Boolean EndTest = false,canCreateTest=true;
     ArrayList<Entry> entries;
     ArrayList<String> PieEntryLabels;
     ArrayList<Question> questionsForTest;
@@ -46,22 +50,23 @@ public class TestActivity extends AppCompatActivity {
     ArrayList<Button> AnswearButtons = new ArrayList<Button>();
     Thread t;
     Date diffDate=new Date();
-
     PieChart pieChart;
     PieDataSet pieDataSet;
     PieData pieData;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        SharedPreferences resSettings = getSharedPreferences("BYLECO", MODE_PRIVATE);
+        userName = resSettings.getString("USER_NAME", "empty");
         setContentView(R.layout.activity_test);
-        InitializeControls();
         startClock();
         IdCategory = getIntent().getIntExtra("IdCategory", IdofCategory);
         difficulty = getIntent().getIntExtra("Difficulty", diff);
         difficulty++;
         CreateTest();
+        if(canCreateTest) { InitializeControls();}
 
 
     }
@@ -84,14 +89,26 @@ public class TestActivity extends AppCompatActivity {
 
 
     void CreateTest() {
+
         TestDownloadBackgroundWorker test = new TestDownloadBackgroundWorker(IdCategory, difficulty, this);
         test.execute();
+
     }
 
     public void QuestionTaker(Test testGenerate) {
         this.QuestionsOfTest = testGenerate;
         questionsForTest = QuestionsOfTest.getQuestions();
-        CreateQuestion();
+       // CreateQuestion();
+        if(questionsForTest.size()>0) {
+            canCreateTest=true;
+            CreateQuestion();
+        }
+        else
+        {
+            canCreateTest=false;
+            this.finish();
+            Toast.makeText(this, "Nie ma wystarczającej ilości pytań o danym poziomie trudności.", Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -155,7 +172,7 @@ public class TestActivity extends AppCompatActivity {
         t.interrupt();
         EndTest = true;
         SimpleDateFormat localDateFormat = new SimpleDateFormat("HH:mm:ss");
-        String time = localDateFormat.format(diffDate);
+        time = localDateFormat.format(diffDate);
 
         QuestionText.setText("Test Ukończono.\n Wynik: " + CorrectAnswear + "/" + PointsCount + " punktów.\n Czas przejścia testu: "+time);
         QuestionNumber.setText("");
@@ -176,8 +193,17 @@ public class TestActivity extends AppCompatActivity {
         pieData.setValueTextSize(10f);
         pieChart.animateY(3000);
         Clock.setText("");
+        AddStatistic();
 
     }
+
+    private void AddStatistic()
+    {
+        String type="addStats";
+        AddStatisticBackgroundWorker addStatisticBackgroundWorker = new AddStatisticBackgroundWorker(this);
+        addStatisticBackgroundWorker.execute(type,userName,Integer.toString(IdCategory),Integer.toString(difficulty),time,Integer.toString(CorrectAnswear));
+    }
+
 
     private void startClock() {
 
@@ -214,17 +240,16 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void InitializeControls() {
-        Clock = findViewById(R.id.ClockView);
-        QuestionText = findViewById(R.id.Question);
-        AnswearButtons.add((Button) findViewById(R.id.Answear1));
-        AnswearButtons.add((Button) findViewById(R.id.Answear2));
-        AnswearButtons.add((Button) findViewById(R.id.Answear3));
-        pieChart = (PieChart) findViewById(R.id.piechart);
-        pieChart.setVisibility(View.GONE);
-        entries = new ArrayList<>();
-        PieEntryLabels = new ArrayList<String>();
-        QuestionNumber = findViewById(R.id.QuestionNumber);
 
-
+            Clock = findViewById(R.id.ClockView);
+            QuestionText = findViewById(R.id.Question);
+            AnswearButtons.add((Button) findViewById(R.id.Answear1));
+            AnswearButtons.add((Button) findViewById(R.id.Answear2));
+            AnswearButtons.add((Button) findViewById(R.id.Answear3));
+            pieChart = (PieChart) findViewById(R.id.piechart);
+            pieChart.setVisibility(View.GONE);
+            entries = new ArrayList<>();
+            PieEntryLabels = new ArrayList<String>();
+            QuestionNumber = findViewById(R.id.QuestionNumber);
     }
 }

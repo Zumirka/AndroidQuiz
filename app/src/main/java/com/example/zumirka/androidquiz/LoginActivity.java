@@ -1,6 +1,7 @@
 package com.example.zumirka.androidquiz;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText Login, Password;
     Encryption en = new Encryption();
+    String login;
+
 
 
     @Override
@@ -27,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         Login = findViewById(R.id.Login);
         Password = findViewById(R.id.Password);
+
+
 
 
     }
@@ -52,12 +57,17 @@ public class LoginActivity extends AppCompatActivity {
 
     public void OnLogin(View view) throws NoSuchAlgorithmException {
         if(check()==true) {
-            String login = Login.getText().toString();
+            login = Login.getText().toString();
             String password = Password.getText().toString();
             String type = "login";
             String SHAPassword = en.CalculateHash(password, login);
             LoginBackgroundWorker backgroundWorker = new LoginBackgroundWorker(this);
             backgroundWorker.execute(type, login, SHAPassword);
+            SharedPreferences saveSettings = getSharedPreferences("BYLECO", MODE_PRIVATE);
+            SharedPreferences.Editor editor = saveSettings.edit();
+            editor.putString("USER_NAME", login);
+            editor.commit();
+
         }
         else
         {
@@ -72,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
     {
         startActivity(new Intent(this,RegistredActivity.class));
     }
+
 
 }
 

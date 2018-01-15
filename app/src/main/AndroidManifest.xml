@@ -27,14 +27,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegistredActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".MainMenuActivity" />
-        <activity android:name=".MenuTestActivity" />
-        <activity android:name=".InformtionActivity" />
-        <activity android:name=".StatisticActivity" />
-        <activity android:name=".TestActivity" />
-        <activity android:name=".AddQuestionActivity"></activity>
+            android:name=".RegistredActivity" />
+        <activity android:name=".MainMenuActivity" android:parentActivityName=".LoginActivity" />
+        <activity android:name=".MenuTestActivity" android:parentActivityName=".MainMenuActivity" />
+        <activity android:name=".InformtionActivity" android:parentActivityName=".MainMenuActivity"/>
+        <activity android:name=".StatisticActivity" android:parentActivityName=".MainMenuActivity" />
+        <activity android:name=".TestActivity" android:parentActivityName=".MainMenuActivity"/>
+        <activity android:name=".AddQuestionActivity" android:parentActivityName=".TestActivity"></activity>
     </application>
 
 </manifest>
