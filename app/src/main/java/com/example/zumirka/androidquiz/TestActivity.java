@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Logger;
@@ -57,7 +58,6 @@ public class TestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         SharedPreferences resSettings = getSharedPreferences("BYLECO", MODE_PRIVATE);
         userName = resSettings.getString("USER_NAME", "empty");
         setContentView(R.layout.activity_test);
@@ -223,10 +223,11 @@ public class TestActivity extends AppCompatActivity {
                                 long now=SystemClock.elapsedRealtime();
                                 long diff=now-startTime;
                                 diffDate.setTime(diff);
-                                int hours = diffDate.getHours();
-                                int minutes = diffDate.getMinutes();
-                                int seconds = diffDate.getSeconds();
-                                String curTime = String.format("%02d : %02d : %02d", hours, minutes, seconds);
+                                diffDate.setTime(diff);
+                                SimpleDateFormat format=new SimpleDateFormat("HH:MM:SS");
+                                format.setTimeZone(TimeZone.getTimeZone("UTC"));
+                                String curTime=format.format(diffDate);
+
                                 Clock.setText(curTime); //change clock to your textview
                             }
                         });

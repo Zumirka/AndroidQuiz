@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.zumirka.androidquiz.AsyncTasks.AddQuestionBackgroundWorker;
 
@@ -52,6 +53,11 @@ public class AddQuestionActivity extends AppCompatActivity {
        if(CheckIfNotEmpty())
        {
            String type="addQuestion";
+          for(int i=0;i<Controls.size();i++)
+          {
+              Controls.get(i).setText("");
+          }
+           Toast.makeText(this, "Pytanie zostało dodane.", Toast.LENGTH_LONG).show();
            AddQuestionBackgroundWorker addqBackgroundWorker = new AddQuestionBackgroundWorker(this);
            addqBackgroundWorker.execute(type,Integer.toString(IdCategory),Integer.toString(difficulty),question,answ1,answ2,answ3);
        }
@@ -73,7 +79,7 @@ public class AddQuestionActivity extends AppCompatActivity {
        {
            if(Controls.get(i).getText().toString().trim().length()==0)
            {
-               Controls.get(i).setError("Nie może być puste");
+               Controls.get(i).setError(this.getString(R.string.not_empty));
                t= false;
            }
            else

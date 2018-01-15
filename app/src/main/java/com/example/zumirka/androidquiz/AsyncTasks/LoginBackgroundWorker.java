@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.widget.Toast;
+
 import com.example.zumirka.androidquiz.MainMenuActivity;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -88,7 +91,7 @@ public class LoginBackgroundWorker extends AsyncTask<String,Void,String> {
     @Override
     protected void onPreExecute() {
         alert=new AlertDialog.Builder(context).create();
-        alert.setTitle("Login Status");
+        alert.setTitle("Status Logowania:");
 
     }
 
@@ -97,20 +100,22 @@ public class LoginBackgroundWorker extends AsyncTask<String,Void,String> {
 
 
         if(result.equals("1")) {
-            alert.setMessage("logowanie powiodło się");
-            alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialogInterface) {
+            Toast.makeText(context, "Logowanie pomyślne", Toast.LENGTH_LONG).show();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
                     context.startActivity(new Intent(context, MainMenuActivity.class));
                 }
-            });
+            }, 500);
+
+
 
         }else
         {
-            alert.setMessage("logowanie nie powiodło się");
+            alert.setMessage("logowanie nie powiodło się. \n Spróbuj ponownie.");
+            alert.show();
 
         }
-        alert.show();
     }
 
     @Override

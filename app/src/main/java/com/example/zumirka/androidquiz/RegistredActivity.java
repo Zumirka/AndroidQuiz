@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.example.zumirka.androidquiz.AsyncTasks.RegistredBackgroundWorker;
@@ -50,8 +51,33 @@ public class RegistredActivity extends AppCompatActivity {
         return false;
     }
 
+    Boolean CheckIfNotEmpty()
+    {
+        Boolean t=false;
+        if(login.getText().toString().trim().length()==0)
+        {
+            login.setError(this.getString(R.string.not_empty));
+            t=false;
+        }
+        if(password.getText().toString().trim().length()==0)
+        {
+            password.setError(this.getString(R.string.not_empty));
+        }
+        if(repeat_password.getText().toString().trim().length()==0)
+        {
+            repeat_password.setError(this.getString(R.string.not_empty));
+        }
+        else {
+            t = true;
+        }
+
+        return t;
+    }
+
+
     public void OnReg(View view) throws NoSuchAlgorithmException {
-        if (check() == true) {
+        if (check()) {
+            if(CheckIfNotEmpty()){
             String str_login = login.getText().toString();
             String str_password = password.getText().toString();
             String str_password_repeat = repeat_password.getText().toString();
@@ -60,15 +86,16 @@ public class RegistredActivity extends AppCompatActivity {
                 String type = "register";
                 String hsh = en.CalculateHash(str_password, str_login);
                 RegistredBackgroundWorker backgroundWorker = new RegistredBackgroundWorker(this, con);
-
                 backgroundWorker.execute(type, str_login, hsh);
+                InputMethodManager inputManager = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (inputManager != null) {
+                    inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+            }
+            else {
+                repeat_password.setError(this.getString(R.string.not_equal));
+            }
 
-
-            } else {
-                alert = new AlertDialog.Builder(this).create();
-                alert.setTitle("Status Logowania:");
-                alert.setMessage("Hasła się różnią. \n Wpisz hasła poprawnie.");
-                alert.show();
             }
         } else {
             AlertDialog alert;

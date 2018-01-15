@@ -82,20 +82,11 @@ public class AddQuestionBackgroundWorker  extends AsyncTask<String,Void,String> 
 
     @Override
     protected void onPreExecute() {
-        alert=new AlertDialog.Builder(context).create();
-        alert.setTitle("Status dodawania:");
-        alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
 
-            }
-        });
     }
 
     @Override
     protected void onPostExecute(String result) {
-        alert.setMessage(result);
-        alert.show();
 
     }
 

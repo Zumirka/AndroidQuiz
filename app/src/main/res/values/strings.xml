@@ -14,6 +14,8 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="not_empty">Pole nie może być puste</string>
+    <string name="not_equal">Hasła się różnią</string>
     <string-array name="difficulty_array">
         <item>Łatwy</item>
         <item>Średni</item>

@@ -1,13 +1,17 @@
 package com.example.zumirka.androidquiz;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.zumirka.androidquiz.AsyncTasks.LoginBackgroundWorker;
 import com.example.zumirka.androidquiz.Utilities.Encryption;
@@ -55,18 +59,45 @@ public class LoginActivity extends AppCompatActivity {
         return false;
     }
 
+    Boolean CheckIfNotEmpty()
+    {
+        Boolean t=false;
+            if(Login.getText().toString().trim().length()==0)
+            {
+                Login.setError(this.getString(R.string.not_empty));
+                 t=false;
+            }
+            if(Password.getText().toString().trim().length()==0)
+            {
+                Password.setError(this.getString(R.string.not_empty));
+            }
+            else {
+                t = true;
+            }
+
+        return t;
+    }
+
+
     public void OnLogin(View view) throws NoSuchAlgorithmException {
         if(check()==true) {
-            login = Login.getText().toString();
-            String password = Password.getText().toString();
-            String type = "login";
-            String SHAPassword = en.CalculateHash(password, login);
-            LoginBackgroundWorker backgroundWorker = new LoginBackgroundWorker(this);
-            backgroundWorker.execute(type, login, SHAPassword);
-            SharedPreferences saveSettings = getSharedPreferences("BYLECO", MODE_PRIVATE);
-            SharedPreferences.Editor editor = saveSettings.edit();
-            editor.putString("USER_NAME", login);
-            editor.commit();
+            if(CheckIfNotEmpty()) {
+                login = Login.getText().toString();
+                String password = Password.getText().toString();
+                String type = "login";
+                String SHAPassword = en.CalculateHash(password, login);
+                LoginBackgroundWorker backgroundWorker = new LoginBackgroundWorker(this);
+                backgroundWorker.execute(type, login, SHAPassword);
+                SharedPreferences saveSettings = getSharedPreferences("BYLECO", MODE_PRIVATE);
+                SharedPreferences.Editor editor = saveSettings.edit();
+                editor.putString("USER_NAME", login);
+                editor.commit();
+                InputMethodManager inputManager = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (inputManager != null) {
+                    inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+
+            }
 
         }
         else
