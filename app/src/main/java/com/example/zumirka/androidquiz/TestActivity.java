@@ -3,6 +3,7 @@ package com.example.zumirka.androidquiz;
 import android.content.SharedPreferences;
 import android.icu.util.Calendar;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.os.SystemClock;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -19,11 +20,11 @@ import com.example.zumirka.androidquiz.Model.Question;
 import com.example.zumirka.androidquiz.Model.Test;
 
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Logger;
@@ -207,6 +208,7 @@ public class TestActivity extends AppCompatActivity {
 
     private void startClock() {
 
+     /*
 
        t= new Thread() {
             long startTime=SystemClock.elapsedRealtime();
@@ -223,11 +225,10 @@ public class TestActivity extends AppCompatActivity {
                                 long now=SystemClock.elapsedRealtime();
                                 long diff=now-startTime;
                                 diffDate.setTime(diff);
-                                diffDate.setTime(diff);
-                                SimpleDateFormat format=new SimpleDateFormat("HH:MM:SS");
-                                format.setTimeZone(TimeZone.getTimeZone("UTC"));
-                                String curTime=format.format(diffDate);
-
+                                int hours = diffDate.getHours();
+                                int minutes = diffDate.getMinutes();
+                                int seconds = diffDate.getSeconds();
+                                String curTime = String.format("%02d : %02d : %02d", hours, minutes, seconds);
                                 Clock.setText(curTime); //change clock to your textview
                             }
                         });
@@ -238,6 +239,9 @@ public class TestActivity extends AppCompatActivity {
         };
 
         t.start();
+        */
+
+
     }
 
     private void InitializeControls() {
@@ -252,5 +256,7 @@ public class TestActivity extends AppCompatActivity {
             entries = new ArrayList<>();
             PieEntryLabels = new ArrayList<String>();
             QuestionNumber = findViewById(R.id.QuestionNumber);
-    }
+
+        }
+
 }
