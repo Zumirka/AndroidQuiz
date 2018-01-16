@@ -1,11 +1,8 @@
 package com.example.zumirka.androidquiz;
 
 import android.content.SharedPreferences;
-import android.icu.util.Calendar;
-import android.os.Build;
-import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.SystemClock;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,21 +10,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.zumirka.androidquiz.AsyncTasks.AddStatisticBackgroundWorker;
+import com.example.zumirka.androidquiz.AsyncTasks.StatisticBackgroundWorker;
 import com.example.zumirka.androidquiz.AsyncTasks.TestDownloadBackgroundWorker;
 import com.example.zumirka.androidquiz.Model.Answer;
 import com.example.zumirka.androidquiz.Model.Question;
 import com.example.zumirka.androidquiz.Model.Test;
 
 
-import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Logger;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarEntry;
@@ -55,6 +46,24 @@ public class TestActivity extends AppCompatActivity {
     PieChart pieChart;
     PieDataSet pieDataSet;
     PieData pieData;
+    Handler handler=new Handler();
+    long startTime=0L,timeMs=0L,timeSwap=0L,updateTime=0L;
+
+
+    Runnable updateTimeThread=new Runnable() {
+        @Override
+        public void run() {
+            timeMs=SystemClock.uptimeMillis()-startTime;
+            updateTime=timeSwap+timeMs;
+            int sec=(int)(updateTime/1000);
+            int min=sec/60;
+            int hour=min/60;
+            sec%=60;
+            Clock.setText(String.format("%02d",hour)+":"+String.format("%02d",min)+":"+String.format("%02d",sec));
+            handler.postDelayed(this,0);
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,11 +179,10 @@ public class TestActivity extends AppCompatActivity {
 
     private void EndOfTest() {
 
-        t.interrupt();
-        EndTest = true;
-        SimpleDateFormat localDateFormat = new SimpleDateFormat("HH:mm:ss");
-        time = localDateFormat.format(diffDate);
 
+        EndTest = true;
+        stopClock();
+        time=Clock.getText().toString();
         QuestionText.setText("Test Ukończono.\n Wynik: " + CorrectAnswear + "/" + PointsCount + " punktów.\n Czas przejścia testu: "+time);
         QuestionNumber.setText("");
 
@@ -200,48 +208,26 @@ public class TestActivity extends AppCompatActivity {
 
     private void AddStatistic()
     {
+
         String type="addStats";
-        AddStatisticBackgroundWorker addStatisticBackgroundWorker = new AddStatisticBackgroundWorker(this);
+        StatisticBackgroundWorker addStatisticBackgroundWorker = new StatisticBackgroundWorker(this);
         addStatisticBackgroundWorker.execute(type,userName,Integer.toString(IdCategory),Integer.toString(difficulty),time,Integer.toString(CorrectAnswear));
     }
 
 
+
+
+
     private void startClock() {
 
-     /*
+        startTime=SystemClock.uptimeMillis();
+        handler.postDelayed(updateTimeThread,0);
 
-       t= new Thread() {
-            long startTime=SystemClock.elapsedRealtime();
-
-            @Override
-            public void run() {
-                try {
-                    while (!isInterrupted()) {
-                        Thread.sleep(1000);
-                        runOnUiThread(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                long now=SystemClock.elapsedRealtime();
-                                long diff=now-startTime;
-                                diffDate.setTime(diff);
-                                int hours = diffDate.getHours();
-                                int minutes = diffDate.getMinutes();
-                                int seconds = diffDate.getSeconds();
-                                String curTime = String.format("%02d : %02d : %02d", hours, minutes, seconds);
-                                Clock.setText(curTime); //change clock to your textview
-                            }
-                        });
-                    }
-                } catch (InterruptedException e) {
-                }
-            }
-        };
-
-        t.start();
-        */
-
-
+    }
+    private void stopClock()
+    {
+        timeSwap+=timeMs;
+        handler.removeCallbacks(updateTimeThread);
     }
 
     private void InitializeControls() {
