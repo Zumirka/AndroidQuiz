@@ -130,7 +130,7 @@ public class StatisticBackgroundWorker extends AsyncTask<String,Void,String> {
                     {
                        Statistic stats=new Statistic();
                         jsObject=jsArray.getJSONObject(i);
-                        stats.setCategoryId(jsObject.getString("CategoryId"));
+                        stats.setCategoryName(jsObject.getString("CategoryName"));
                         stats.setDifficulty(jsObject.getString("Difficulty"));
                         stats.setTime(jsObject.getString("Time"));
                         stats.setPoints(jsObject.getString("Points"));

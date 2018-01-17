@@ -5,9 +5,9 @@ package com.example.zumirka.androidquiz.Model;
 
 public class Statistic {
 
-    private String CategoryId,Difficulty,Time,Points,Date;
+    private String CategoryName,Difficulty,Time,Points,Date;
     public  Statistic() {}
-    public String getCategoryId(){return  CategoryId;}
+    public String getCategoryName(){return  CategoryName;}
     public String getDifficulty(){
         String diff="";
         if(Difficulty.equals("1"))
@@ -25,7 +25,7 @@ public class Statistic {
     public String getTime(){return Time;}
     public String getPoints() {return Points;}
     public String getDate() {return Date;}
-    public void setCategoryId( String id){this.CategoryId=id;}
+    public void setCategoryName( String name){this.CategoryName=name;}
     public void setDifficulty(String diff){this.Difficulty=diff;}
     public void setTime(String time){this.Time=time;}
     public void setPoints(String points){this.Points=points;}
