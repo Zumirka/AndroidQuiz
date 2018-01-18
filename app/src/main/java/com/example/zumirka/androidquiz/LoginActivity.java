@@ -87,8 +87,8 @@ public class LoginActivity extends AppCompatActivity {
         dialog.setCancelable(false);
 
         if(check()==true) {
-            dialog.show();
             if(CheckIfNotEmpty()) {
+                dialog.show();
                 login = Login.getText().toString();
                 String password = Password.getText().toString();
                 String type = "login";

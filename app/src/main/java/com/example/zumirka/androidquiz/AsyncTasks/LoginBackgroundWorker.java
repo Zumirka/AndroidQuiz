@@ -73,6 +73,7 @@ public class LoginBackgroundWorker extends AsyncTask<String,Void,String> {
                     while ((line = bufferedReader.readLine()) != null) {
                         result += line;
                     }
+
                     bufferedReader.close();
                     inputStream.close();
                     httpURLConnection.disconnect();
@@ -81,6 +82,7 @@ public class LoginBackgroundWorker extends AsyncTask<String,Void,String> {
                 {
                     alert.setMessage("Brak połączenia z internetem");
                 }
+
             }
 
             catch(MalformedURLException e) {
@@ -99,15 +101,17 @@ public class LoginBackgroundWorker extends AsyncTask<String,Void,String> {
         dialog.setCancelable(false);
         dialog.show();
 
+
     }
 
     @Override
     protected void onPostExecute(String result) {
 
-        if (dialog.isShowing()) {
-            dialog.dismiss();
-        }
+
         if(result.equals("1")) {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
             Toast.makeText(context, "Logowanie pomyślne", Toast.LENGTH_LONG).show();
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -120,6 +124,9 @@ public class LoginBackgroundWorker extends AsyncTask<String,Void,String> {
 
         }else
         {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
             alert.setMessage("logowanie nie powiodło się. \n Spróbuj ponownie.");
             alert.show();
 
