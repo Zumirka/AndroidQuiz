@@ -1,6 +1,7 @@
 package com.example.zumirka.androidquiz.AsyncTasks;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,11 +30,14 @@ public class LoginBackgroundWorker extends AsyncTask<String,Void,String> {
     String[] data;
     String login;
 
+    ProgressDialog dialog;
 
     public LoginBackgroundWorker (Context ctx)
 
     {
+        dialog=new ProgressDialog(ctx);
         context=ctx;
+
     }
 
 
@@ -90,15 +94,19 @@ public class LoginBackgroundWorker extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPreExecute() {
-        alert=new AlertDialog.Builder(context).create();
-        alert.setTitle("Status Logowania:");
+        dialog.setMessage("Logowanie...");
+        dialog.setIndeterminate(true);
+        dialog.setCancelable(false);
+        dialog.show();
 
     }
 
     @Override
     protected void onPostExecute(String result) {
 
-
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if(result.equals("1")) {
             Toast.makeText(context, "Logowanie pomyślne", Toast.LENGTH_LONG).show();
             Handler handler = new Handler();

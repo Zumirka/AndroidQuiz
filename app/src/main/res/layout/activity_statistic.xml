@@ -63,11 +63,11 @@
         android:id="@+id/ScrollV"
         style="@android:style/Widget.DeviceDefault.Light.ScrollView"
         android:layout_width="match_parent"
-        android:layout_height="286dp"
-        android:layout_marginBottom="3dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="240dp"
+        android:layout_height="250dp"
+        android:layout_marginBottom="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="350dp"
         android:clipToPadding="false"
         android:fillViewport="false"
         android:visibility="visible"
@@ -98,6 +98,21 @@
         </HorizontalScrollView>
 
     </ScrollView>
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/piechart"
+        android:layout_width="0dp"
+        android:layout_height="165dp"
+        android:layout_marginBottom="390dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="110dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"></com.github.mikephil.charting.charts.PieChart>
 
 
 </android.support.constraint.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.example.zumirka.androidquiz.AsyncTasks;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
@@ -23,13 +24,14 @@ import java.net.URLEncoder;
 
 public class RegistredBackgroundWorker extends AsyncTask<String,Void,String> {
     Context context;
-    AlertDialog alert;
     String[] data;
     RegistredActivity re;
+    ProgressDialog dialog;
 
     public RegistredBackgroundWorker(RegistredActivity reg, Context con)
 
     {
+        dialog=new ProgressDialog(con);
        this.re=reg;
        this.context=con;
 
@@ -87,10 +89,17 @@ public class RegistredBackgroundWorker extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPreExecute() {
+        dialog.setMessage("Rejestracja...");
+        dialog.setIndeterminate(true);
+        dialog.setCancelable(false);
+        dialog.show();
     }
 
     @Override
     protected void onPostExecute(String result) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         Toast.makeText(context, "Zostałeś zarejestrowany.\n Możesz się zalogować.", Toast.LENGTH_LONG).show();
          re.finish();
 

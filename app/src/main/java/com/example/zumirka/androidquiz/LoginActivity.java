@@ -1,5 +1,6 @@
 package com.example.zumirka.androidquiz;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -80,7 +81,13 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void OnLogin(View view) throws NoSuchAlgorithmException {
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage("Logowanie...");
+        dialog.setIndeterminate(true);
+        dialog.setCancelable(false);
+
         if(check()==true) {
+            dialog.show();
             if(CheckIfNotEmpty()) {
                 login = Login.getText().toString();
                 String password = Password.getText().toString();
@@ -88,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                 String SHAPassword = en.CalculateHash(password, login);
                 LoginBackgroundWorker backgroundWorker = new LoginBackgroundWorker(this);
                 backgroundWorker.execute(type, login, SHAPassword);
+
                 SharedPreferences saveSettings = getSharedPreferences("BYLECO", MODE_PRIVATE);
                 SharedPreferences.Editor editor = saveSettings.edit();
                 editor.putString("USER_NAME", login);
@@ -96,12 +104,13 @@ public class LoginActivity extends AppCompatActivity {
                 if (inputManager != null) {
                     inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
-
+                dialog.hide();
             }
 
         }
         else
         {
+            dialog.hide();
             AlertDialog alert;
             alert=new AlertDialog.Builder(this).create();
             alert.setTitle("Status Logowania:");

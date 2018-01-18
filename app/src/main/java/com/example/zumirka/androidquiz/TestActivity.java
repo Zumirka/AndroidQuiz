@@ -1,5 +1,6 @@
 package com.example.zumirka.androidquiz;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -10,8 +11,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.zumirka.androidquiz.AsyncTasks.StatisticBackgroundWorker;
 import com.example.zumirka.androidquiz.AsyncTasks.TestDownloadBackgroundWorker;
+import com.example.zumirka.androidquiz.AsyncTasks.addStatisticBackgroundWorker;
+import com.example.zumirka.androidquiz.AsyncTasks.getStatisticBackgroundWorker;
 import com.example.zumirka.androidquiz.Model.Answer;
 import com.example.zumirka.androidquiz.Model.Question;
 import com.example.zumirka.androidquiz.Model.Test;
@@ -210,7 +212,7 @@ public class TestActivity extends AppCompatActivity {
     {
 
         String type="addStats";
-        StatisticBackgroundWorker addStatisticBackgroundWorker = new StatisticBackgroundWorker(this);
+        addStatisticBackgroundWorker addStatisticBackgroundWorker = new addStatisticBackgroundWorker(this);
         addStatisticBackgroundWorker.execute(type,userName,Integer.toString(IdCategory),Integer.toString(difficulty),time,Integer.toString(CorrectAnswear));
     }
 
