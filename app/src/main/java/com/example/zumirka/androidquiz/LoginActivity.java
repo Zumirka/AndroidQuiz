@@ -1,4 +1,5 @@
 package com.example.zumirka.androidquiz;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -6,48 +7,38 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.zumirka.androidquiz.AsyncTasks.LoginBackgroundWorker;
 import com.example.zumirka.androidquiz.Utilities.Encryption;
-
-import java.security.NoSuchAlgorithmException;
 
 
 public class LoginActivity extends AppCompatActivity {
 
 
-    private EditText Login, Password;
     Encryption en = new Encryption();
     String login;
-
-
+    private EditText loginEditText, passwordEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Login = findViewById(R.id.Login);
-        Password = findViewById(R.id.Password);
-
-
+        loginEditText = findViewById(R.id.Login);
+        passwordEditText = findViewById(R.id.Password);
 
 
     }
 
 
-    Boolean check()
-    {
+    Boolean isInternetConnection() {
         ConnectivityManager connectivity = (ConnectivityManager) this.getSystemService(this.CONNECTIVITY_SERVICE);
-        if(connectivity !=null)
-
-        {
+        if (connectivity != null) {
             NetworkInfo[] info = connectivity.getAllNetworkInfo();
             if (info != null) {
                 for (int i = 0; i < info.length; i++) {
@@ -60,43 +51,30 @@ public class LoginActivity extends AppCompatActivity {
         return false;
     }
 
-    Boolean CheckIfNotEmpty()
-    {
-            if(Login.getText().toString().trim().length()==0)
-            {
-                Login.setError(this.getString(R.string.not_empty));
-                 return false;
-            }
+    // TODO
+    Boolean CheckIfNotEmpty() {
+        if (loginEditText.getText().toString().trim().length() == 0) {
+            loginEditText.setError(this.getString(R.string.not_empty));
+            return false;
+        }
 
-            if(Password.getText().toString().trim().length()==0)
-            {
-                Password.setError(this.getString(R.string.not_empty));
-                return false;
-            }
+        if (passwordEditText.getText().toString().trim().length() == 0) {
+            passwordEditText.setError(this.getString(R.string.not_empty));
+            return false;
+        }
         return true;
     }
 
+    // TODO byleco co robi input manager
+    public void OnLogin(View view) {
+        ProgressDialog dialog = prepareDialog();
 
-    public void OnLogin(View view) throws NoSuchAlgorithmException {
-        ProgressDialog dialog = new ProgressDialog(this);
-        dialog.setMessage("Logowanie...");
-        dialog.setIndeterminate(true);
-        dialog.setCancelable(false);
-
-        if(check()==true) {
-            if(CheckIfNotEmpty()) {
+        if (isInternetConnection()) {
+            if (CheckIfNotEmpty()) {
                 dialog.show();
-                login = Login.getText().toString();
-                String password = Password.getText().toString();
-                String type = "login";
-                String SHAPassword = en.CalculateHash(password, login);
-                LoginBackgroundWorker backgroundWorker = new LoginBackgroundWorker(this);
-                backgroundWorker.execute(type, login, SHAPassword);
+                sendLoginAndPassword();
+                saveInSharedPref();
 
-                SharedPreferences saveSettings = getSharedPreferences("BYLECO", MODE_PRIVATE);
-                SharedPreferences.Editor editor = saveSettings.edit();
-                editor.putString("USER_NAME", login);
-                editor.commit();
                 InputMethodManager inputManager = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (inputManager != null) {
                     inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -104,20 +82,47 @@ public class LoginActivity extends AppCompatActivity {
                 dialog.hide();
             }
 
-        }
-        else
-        {
+        } else {
             dialog.hide();
-            AlertDialog alert;
-            alert=new AlertDialog.Builder(this).create();
-            alert.setTitle("Status Logowania:");
-            alert.setMessage("Brak połączenia z internetem.");
-            alert.show();
+            showErrorDialog();
         }
     }
-    public void OpenReg(View view)
-    {
-        startActivity(new Intent(this,RegistredActivity.class));
+
+    private void showErrorDialog() {
+        AlertDialog alert;
+        alert = new AlertDialog.Builder(this).create();
+        alert.setTitle("Status Logowania:");
+        alert.setMessage("Brak połączenia z internetem.");
+        alert.show();
+    }
+
+    private void saveInSharedPref() {
+        SharedPreferences saveSettings = getSharedPreferences("BYLECO", MODE_PRIVATE);
+        SharedPreferences.Editor editor = saveSettings.edit();
+        editor.putString("USER_NAME", login);
+        editor.commit();
+    }
+
+    private void sendLoginAndPassword() {
+        login = loginEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+        String type = "login";
+        String SHAPassword = en.CalculateHash(password, login);
+        LoginBackgroundWorker backgroundWorker = new LoginBackgroundWorker(this);
+        backgroundWorker.execute(type, login, SHAPassword);
+    }
+
+    @NonNull
+    private ProgressDialog prepareDialog() {
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage("Logowanie...");
+        dialog.setIndeterminate(true);
+        dialog.setCancelable(false);
+        return dialog;
+    }
+
+    public void OpenReg(View view) {
+        startActivity(new Intent(this, RegistredActivity.class));
     }
 
 
