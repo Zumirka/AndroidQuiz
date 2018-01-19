@@ -79,7 +79,7 @@ public class MainMenuActivity extends AppCompatActivity {
     public void MenuTestActivityStart() {
         Intent i = new Intent(this, MenuTestActivity.class);
 
-        i.putExtra("IdCategory", IdCategory);
+        i.putExtra("idCategory", IdCategory);
         startActivity(i);
 
     }

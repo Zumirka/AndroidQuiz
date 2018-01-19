@@ -15,7 +15,8 @@
         android:ems="10"
         android:inputType="textMultiLine"
         app:layout_constraintTop_toBottomOf="@+id/QuestionContent"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp"
+         />
 
     <TextView
         android:id="@+id/QuestionContent"
@@ -81,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:onClick="AddQuestionOnClick"
+        android:onClick="addQuestionOnClick"
         android:text="Dodaj Pytanie"
         app:layout_constraintTop_toBottomOf="@+id/Answear3W"
         tools:layout_editor_absoluteX="127dp" />

@@ -3,14 +3,7 @@ package com.example.zumirka.androidquiz.AsyncTasks;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.example.zumirka.androidquiz.Model.Category;
 import com.example.zumirka.androidquiz.Model.Statistic;
-import com.example.zumirka.androidquiz.StatisticActivity;
-import com.example.zumirka.androidquiz.TestActivity;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
