@@ -54,6 +54,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
             gridViewButtons.setAdapter(adapter);
 
+
             gridViewButtons.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                    SelectedCategory = parent.getItemAtPosition(position).toString();

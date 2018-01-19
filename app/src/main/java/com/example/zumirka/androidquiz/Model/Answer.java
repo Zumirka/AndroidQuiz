@@ -6,7 +6,7 @@ package com.example.zumirka.androidquiz.Model;
 
 public class Answer {
     private String content;
-    private boolean iSTrue;
+    private boolean isCorrect;
 
     public String getContent() {
         return content;
@@ -16,11 +16,11 @@ public class Answer {
         this.content = content;
     }
 
-    public boolean isiSTrue() {
-        return iSTrue;
+    public boolean isCorrect() {
+        return isCorrect;
     }
 
-    public void setiSTrue(boolean iSTrue) {
-        this.iSTrue = iSTrue;
+    public void setCorrect(boolean correct) {
+        this.isCorrect = correct;
     }
 }

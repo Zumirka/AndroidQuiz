@@ -10,7 +10,6 @@ import com.example.zumirka.androidquiz.Model.Test;
 import com.example.zumirka.androidquiz.TestActivity;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -25,10 +24,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by Zumirka on 28.12.2017.
@@ -100,8 +96,8 @@ public class TestDownloadBackgroundWorker extends AsyncTask<Void,Void,Void>{
                     Answer a =new Answer();
                     a.setContent(jsObject.getString("Answer"));
                     if(jsObject.getInt("IsTrue")==1)
-                    a.setiSTrue(true);
-                    else a.setiSTrue(false);
+                    a.setCorrect(true);
+                    else a.setCorrect(false);
                     test.getLastQuestion().addAnswer(a);
                 }
                ShuffleAnswears();

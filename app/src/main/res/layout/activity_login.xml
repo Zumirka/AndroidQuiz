@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/carmel"
     tools:context="com.example.zumirka.androidquiz.LoginActivity">
 
     <!-- Login progress -->
@@ -25,7 +26,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/email_login_form"
+            android:id="@+id/login_form_l"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -39,10 +40,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:completionHint="Login"
-                    android:hint="@string/prompt_email"
+                    android:hint="@string/login"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="@color/brown" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -56,32 +58,36 @@
                     android:layout_height="wrap_content"
                     android:hint="Hasło"
                     android:imeActionId="6"
-                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:imeActionLabel="@string/password"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="@color/brown" />
 
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/email_sign_in_button"
-                style="?android:textAppearanceSmall"
+                android:id="@+id/sign_in_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:background="@color/brown"
                 android:onClick="OnLogin"
                 android:text="@string/action_sign_in"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/email_regi_in_button"
-                style="?android:textAppearanceSmall"
+                android:id="@+id/regi_in_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:background="@color/brown"
                 android:onClick="OpenReg"
                 android:text="@string/action_rejestration_in"
+                android:textColor="@color/white"
+                android:textColorHint="@color/gray"
                 android:textStyle="bold" />
 
         </LinearLayout>

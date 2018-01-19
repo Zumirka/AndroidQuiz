@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/carmel"
     tools:context="com.example.zumirka.androidquiz.RegistredActivity">
     <!-- Login progress -->
     <ProgressBar
@@ -15,12 +16,12 @@
         android:visibility="gone"/>
 
     <ScrollView
-        android:id="@+id/login_form"
+        android:id="@+id/registred_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/email_login_form"
+            android:id="@+id/login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -33,10 +34,11 @@
                     android:id="@+id/Login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
+                    android:hint="@string/login"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="@color/brown"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -50,11 +52,12 @@
                     android:layout_height="wrap_content"
                     android:hint="Hasło"
                     android:imeActionId="6"
-                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:imeActionLabel="@string/action_sign_in"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="@color/brown"/>
 
 
             </android.support.design.widget.TextInputLayout>
@@ -70,11 +73,12 @@
                     android:layout_height="wrap_content"
                     android:hint="Powtórz Hasło"
                     android:imeActionId="6"
-                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:imeActionLabel="@string/action_sign_in"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="@color/brown"/>
 
 
             </android.support.design.widget.TextInputLayout>
@@ -86,7 +90,9 @@
                 android:layout_marginTop="16dp"
                 android:onClick="OnReg"
                 android:text="@string/action_rejestration_in"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:background="@color/brown"/>
 
         </LinearLayout>
     </ScrollView>

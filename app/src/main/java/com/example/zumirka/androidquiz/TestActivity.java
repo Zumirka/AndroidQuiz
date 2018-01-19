@@ -1,6 +1,5 @@
 package com.example.zumirka.androidquiz;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 
 import com.example.zumirka.androidquiz.AsyncTasks.TestDownloadBackgroundWorker;
 import com.example.zumirka.androidquiz.AsyncTasks.addStatisticBackgroundWorker;
-import com.example.zumirka.androidquiz.AsyncTasks.getStatisticBackgroundWorker;
 import com.example.zumirka.androidquiz.Model.Answer;
 import com.example.zumirka.androidquiz.Model.Question;
 import com.example.zumirka.androidquiz.Model.Test;
@@ -131,7 +129,7 @@ public class TestActivity extends AppCompatActivity {
         answers = questionsForTest.get(index).getAnswers();
         for (int i = 0; i < answers.size(); i++) {
 
-            if (answers.get(i).isiSTrue()) {
+            if (answers.get(i).isCorrect()) {
                 PointsCount += difficulty;
 
             }
@@ -147,19 +145,19 @@ public class TestActivity extends AppCompatActivity {
     public void OnClickButton(View view) {
         switch (view.getId()) {
             case R.id.Answear1:
-                if (answers.get(0).isiSTrue())
+                if (answers.get(0).isCorrect())
                 {
                     CorrectAnswear+=difficulty;
                 }
                 break;
             case R.id.Answear2:
-                if (answers.get(1).isiSTrue())
+                if (answers.get(1).isCorrect())
                 {
                     CorrectAnswear+=difficulty;
                 }
                 break;
             case R.id.Answear3:
-                if (answers.get(2).isiSTrue())
+                if (answers.get(2).isCorrect())
                 {
                     CorrectAnswear+=difficulty;
                 }

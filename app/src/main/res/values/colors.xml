@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="brown">#442C2C</color>
+    <color name="lightbrown">#B38F7F</color>
+    <color name="gray">#787878</color>
+    <color name="peach">#F58B68</color>
+    <color name="carmel">#E9C698</color>
+    <color name="barBrown">#302020</color>
+    <color name="white">#FFFFFF</color>
+
+
 </resources>

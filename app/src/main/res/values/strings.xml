@@ -2,10 +2,9 @@
     <string name="app_name">Quiz Edukacyjny</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Login</string>
-    <string name="prompt_password">Hasło</string>
+    <string name="login">Login</string>
+    <string name="password">Hasło</string>
     <string name="action_sign_in">Zaloguj</string>
-    <string name="action_sign_in_short">Zaloguj</string>
     <string name="action_rejestration_in">Zarejestruj</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
