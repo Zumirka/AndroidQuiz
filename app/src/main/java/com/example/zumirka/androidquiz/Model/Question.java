@@ -1,7 +1,6 @@
 package com.example.zumirka.androidquiz.Model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Zumirka on 28.12.2017.
@@ -9,11 +8,11 @@ import java.util.List;
 
 public class Question {
     private String content;
-    private ArrayList<Answer> answers;
+    private ArrayList<Answear> answears;
     private int difficult;
 
     public Question() {
-        answers=new ArrayList<>();
+        answears = new ArrayList<>();
     }
 
     public String getContent() {
@@ -24,12 +23,12 @@ public class Question {
         this.content = content;
     }
 
-    public ArrayList<Answer> getAnswers() {
-        return answers;
+    public ArrayList<Answear> getAnswears() {
+        return answears;
     }
 
-    public void addAnswer(Answer answer) {
-        this.answers.add(answer);
+    public void addAnswer(Answear answear) {
+        this.answears.add(answear);
     }
 
     public int getDifficult() {

@@ -3,6 +3,7 @@ package com.example.zumirka.androidquiz.AsyncTasks;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.example.zumirka.androidquiz.Model.Category;
 import com.example.zumirka.androidquiz.Model.Statistic;
 import com.example.zumirka.androidquiz.StatisticActivity;
 import com.example.zumirka.androidquiz.TestActivity;
@@ -85,7 +86,7 @@ public class getStatisticBackgroundWorker extends AsyncTask<String,Void,String> 
                 {
                     Statistic stats=new Statistic();
                     jsObject=jsArray.getJSONObject(i);
-                    stats.setCategoryName(jsObject.getString("CategoryName"));
+                    stats.setCategory(new Category(jsObject.getString("CategoryName")));
                     stats.setDifficulty(jsObject.getString("Difficulty"));
                     stats.setTime(jsObject.getString("Time"));
                     stats.setPoints(jsObject.getString("Points"));

@@ -4,7 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.example.zumirka.androidquiz.Model.Answer;
+import com.example.zumirka.androidquiz.Model.Answear;
 import com.example.zumirka.androidquiz.Model.Question;
 import com.example.zumirka.androidquiz.Model.Test;
 import com.example.zumirka.androidquiz.TestActivity;
@@ -93,8 +93,8 @@ public class TestDownloadBackgroundWorker extends AsyncTask<Void,Void,Void>{
                         q.setDifficult(jsObject.getInt("Difficult"));
                         test.getQuestions().add(q);
                     }
-                    Answer a =new Answer();
-                    a.setContent(jsObject.getString("Answer"));
+                    Answear a =new Answear();
+                    a.setContent(jsObject.getString("Answear"));
                     if(jsObject.getInt("IsTrue")==1)
                     a.setCorrect(true);
                     else a.setCorrect(false);
@@ -139,20 +139,20 @@ public class TestDownloadBackgroundWorker extends AsyncTask<Void,Void,Void>{
     {
         for(int i=0;i<test.getQuestions().size();i++)
         {
-            for(int j=0;j<test.getQuestions().get(i).getAnswers().size();j++)
+            for(int j = 0; j<test.getQuestions().get(i).getAnswears().size(); j++)
             {
-               shuffleArray(test.getQuestions().get(i).getAnswers());
+               shuffleArray(test.getQuestions().get(i).getAnswears());
             }
         }
     }
-    private void shuffleArray (ArrayList<Answer> answears)
+    private void shuffleArray (ArrayList<Answear> answears)
     {
         Random rnd = new Random();
         for (int i = answears.size() - 1; i > 0; i--)
         {
             int index = rnd.nextInt(i + 1);
 
-            Answer a=answears.get(index);
+            Answear a=answears.get(index);
             answears.set(index,answears.get(i));
             answears.set(i,a);
         }

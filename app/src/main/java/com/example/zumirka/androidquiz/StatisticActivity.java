@@ -172,7 +172,7 @@ public class StatisticActivity extends AppCompatActivity implements
             for (int i = 0; i < statisticsList.size(); i++) {
                 tr = new TableRow(this);
                 TextView txt = new TextView(this);
-                txt.setText(statisticsList.get(i).getCategoryName());
+                txt.setText(statisticsList.get(i).getCategory().getName());
                 txt.setGravity(Gravity.CENTER);
                 tr.addView(txt);
                 txt = new TextView(this);

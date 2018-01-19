@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.zumirka.androidquiz.AsyncTasks.TestDownloadBackgroundWorker;
 import com.example.zumirka.androidquiz.AsyncTasks.addStatisticBackgroundWorker;
-import com.example.zumirka.androidquiz.Model.Answer;
+import com.example.zumirka.androidquiz.Model.Answear;
 import com.example.zumirka.androidquiz.Model.Question;
 import com.example.zumirka.androidquiz.Model.Test;
 
@@ -39,7 +39,7 @@ public class TestActivity extends AppCompatActivity {
     ArrayList<Entry> entries;
     ArrayList<String> PieEntryLabels;
     ArrayList<Question> questionsForTest;
-    ArrayList<Answer> answers;
+    ArrayList<Answear> answears;
     ArrayList<Button> AnswearButtons = new ArrayList<Button>();
     Thread t;
     Date diffDate=new Date();
@@ -126,14 +126,14 @@ public class TestActivity extends AppCompatActivity {
     private void CreateQuestion() {
 
         QuestionText.setText(questionsForTest.get(index).getContent());
-        answers = questionsForTest.get(index).getAnswers();
-        for (int i = 0; i < answers.size(); i++) {
+        answears = questionsForTest.get(index).getAnswears();
+        for (int i = 0; i < answears.size(); i++) {
 
-            if (answers.get(i).isCorrect()) {
+            if (answears.get(i).isCorrect()) {
                 PointsCount += difficulty;
 
             }
-            AnswearButtons.get(i).setText(answers.get(i).getContent());
+            AnswearButtons.get(i).setText(answears.get(i).getContent());
             AnswearButtons.get(i).setVisibility(View.VISIBLE);
         }
         index++;
@@ -145,19 +145,19 @@ public class TestActivity extends AppCompatActivity {
     public void OnClickButton(View view) {
         switch (view.getId()) {
             case R.id.Answear1:
-                if (answers.get(0).isCorrect())
+                if (answears.get(0).isCorrect())
                 {
                     CorrectAnswear+=difficulty;
                 }
                 break;
             case R.id.Answear2:
-                if (answers.get(1).isCorrect())
+                if (answears.get(1).isCorrect())
                 {
                     CorrectAnswear+=difficulty;
                 }
                 break;
             case R.id.Answear3:
-                if (answers.get(2).isCorrect())
+                if (answears.get(2).isCorrect())
                 {
                     CorrectAnswear+=difficulty;
                 }

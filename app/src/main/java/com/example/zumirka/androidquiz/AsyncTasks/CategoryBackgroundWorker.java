@@ -15,7 +15,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CategoryBackgroundWorker extends AsyncTask<Void,Void,Void> {
     MainMenuActivity mm;
@@ -64,8 +63,8 @@ public class CategoryBackgroundWorker extends AsyncTask<Void,Void,Void> {
                         Category category= new Category();
                         jsObject=jsArray.getJSONObject(i);
 
-                        category.setCategoryID(jsObject.getInt("Id"));
-                        category.setNameOFCategory(jsObject.getString("Name"));
+                        category.setId(jsObject.getInt("Id"));
+                        category.setName(jsObject.getString("Name"));
                         categoriesList.add(category);
                     }
 

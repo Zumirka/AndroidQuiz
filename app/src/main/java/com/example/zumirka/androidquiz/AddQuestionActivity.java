@@ -58,8 +58,8 @@ public class AddQuestionActivity extends AppCompatActivity {
               Controls.get(i).setText("");
           }
            Toast.makeText(this, "Pytanie zostało dodane.", Toast.LENGTH_LONG).show();
-           AddQuestionBackgroundWorker addqBackgroundWorker = new AddQuestionBackgroundWorker(this);
-           addqBackgroundWorker.execute(type,Integer.toString(IdCategory),Integer.toString(difficulty),question,answ1,answ2,answ3);
+           AddQuestionBackgroundWorker addqBackgroundWorker = new AddQuestionBackgroundWorker(this,Integer.toString(IdCategory),Integer.toString(difficulty),question,answ1,answ2,answ3);
+           addqBackgroundWorker.execute();
        }
 
 

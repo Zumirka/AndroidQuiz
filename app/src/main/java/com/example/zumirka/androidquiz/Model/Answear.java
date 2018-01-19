@@ -4,7 +4,7 @@ package com.example.zumirka.androidquiz.Model;
  * Created by Zumirka on 28.12.2017.
  */
 
-public class Answer {
+public class Answear {
     private String content;
     private boolean isCorrect;
 

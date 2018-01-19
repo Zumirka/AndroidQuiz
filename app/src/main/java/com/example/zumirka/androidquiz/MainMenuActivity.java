@@ -47,7 +47,7 @@ public class MainMenuActivity extends AppCompatActivity {
         String[] cat = new String[categoryList.size()];
 
         for(int i=0;i<categoryList.size();i++) {
-           cat[i]= categoryList.get(i).getCategory();
+           cat[i]= categoryList.get(i).getName();
         }
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_list_item_1, cat);
@@ -61,8 +61,8 @@ public class MainMenuActivity extends AppCompatActivity {
 
                     for(int i=0;i<categoryList.size();i++) {
 
-                        if (SelectedCategory==categoryList.get(i).getCategory())
-                            IdCategory=  categoryList.get(i).getCategoryId();
+                        if (SelectedCategory==categoryList.get(i).getName())
+                            IdCategory=  categoryList.get(i).getId();
                     }
                     MenuTestActivityStart();
 
