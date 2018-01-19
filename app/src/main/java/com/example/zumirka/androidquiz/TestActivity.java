@@ -73,7 +73,7 @@ public class TestActivity extends AppCompatActivity {
         SharedPreferences resSettings = getSharedPreferences("BYLECO", MODE_PRIVATE);
         userName = resSettings.getString("USER_NAME", "empty");
         setContentView(R.layout.activity_test);
-        startClock();
+        //startClock();
         IdCategory = getIntent().getIntExtra("IdCategory", IdofCategory);
         difficulty = getIntent().getIntExtra("Difficulty", diff);
         difficulty++;
@@ -102,7 +102,7 @@ public class TestActivity extends AppCompatActivity {
 
     void CreateTest() {
 
-        TestDownloadBackgroundWorker test = new TestDownloadBackgroundWorker(IdCategory, difficulty, this);
+        TestDownloadBackgroundWorker test = new TestDownloadBackgroundWorker(IdCategory, difficulty, this,this);
         test.execute();
 
     }
@@ -114,6 +114,7 @@ public class TestActivity extends AppCompatActivity {
         if(questionsForTest.size()>0) {
             canCreateTest=true;
             CreateQuestion();
+            startClock();
         }
         else
         {
@@ -125,6 +126,7 @@ public class TestActivity extends AppCompatActivity {
     }
 
     private void CreateQuestion() {
+
         QuestionText.setText(questionsForTest.get(index).getContent());
         answers = questionsForTest.get(index).getAnswers();
         for (int i = 0; i < answers.size(); i++) {
@@ -134,6 +136,7 @@ public class TestActivity extends AppCompatActivity {
 
             }
             AnswearButtons.get(i).setText(answers.get(i).getContent());
+            AnswearButtons.get(i).setVisibility(View.VISIBLE);
         }
         index++;
         QuestionNumber.setText(Integer.toString(index) + "/" + Integer.toString(questionsForTest.size()));

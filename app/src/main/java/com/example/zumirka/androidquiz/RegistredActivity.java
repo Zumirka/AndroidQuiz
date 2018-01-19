@@ -51,30 +51,19 @@ public class RegistredActivity extends AppCompatActivity {
         return false;
     }
 
-    Boolean CheckIfNotEmpty()
-    {
-        Boolean t=false;
-        if(login.getText().toString().trim().length()==0)
-        {
+    Boolean CheckIfNotEmpty() {
+        if (login.getText().toString().trim().length() == 0) {
             login.setError(this.getString(R.string.not_empty));
-            t=false;
+            return false;
         }
-        if(password.getText().toString().trim().length()==0)
-        {
+
+        if (password.getText().toString().trim().length() == 0) {
             password.setError(this.getString(R.string.not_empty));
-        }
-        if(repeat_password.getText().toString().trim().length()==0)
-        {
-            repeat_password.setError(this.getString(R.string.not_empty));
-        }
-        else {
-            t = true;
+            return false;
         }
 
-        return t;
+        return true;
     }
-
-
     public void OnReg(View view) throws NoSuchAlgorithmException {
         if (check()) {
             if(CheckIfNotEmpty()){

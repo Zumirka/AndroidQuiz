@@ -62,21 +62,18 @@ public class LoginActivity extends AppCompatActivity {
 
     Boolean CheckIfNotEmpty()
     {
-        Boolean t=false;
             if(Login.getText().toString().trim().length()==0)
             {
                 Login.setError(this.getString(R.string.not_empty));
-                 t=false;
+                 return false;
             }
+
             if(Password.getText().toString().trim().length()==0)
             {
                 Password.setError(this.getString(R.string.not_empty));
+                return false;
             }
-            else {
-                t = true;
-            }
-
-        return t;
+        return true;
     }
 
 

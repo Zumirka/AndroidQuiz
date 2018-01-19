@@ -26,6 +26,7 @@
         android:layout_marginTop="204dp"
         android:onClick="OnClickButton"
         android:textAlignment="center"
+        android:visibility="invisible"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 
@@ -36,6 +37,7 @@
         android:layout_marginTop="12dp"
         android:onClick="OnClickButton"
         android:textAlignment="center"
+        android:visibility="invisible"
         app:layout_constraintTop_toBottomOf="@+id/Answear1"
         tools:layout_editor_absoluteX="148dp" />
 
@@ -46,6 +48,7 @@
         android:layout_marginTop="16dp"
         android:onClick="OnClickButton"
         android:textAlignment="center"
+        android:visibility="invisible"
         app:layout_constraintTop_toBottomOf="@+id/Answear2"
         tools:layout_editor_absoluteX="148dp" />
 

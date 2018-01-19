@@ -26,7 +26,7 @@ import java.net.UnknownHostException;
 
 public class LoginBackgroundWorker extends AsyncTask<String,Void,String> {
     Context context;
-    AlertDialog alert;
+    AlertDialog alert ;
     String[] data;
     String login;
 
@@ -35,6 +35,7 @@ public class LoginBackgroundWorker extends AsyncTask<String,Void,String> {
     public LoginBackgroundWorker (Context ctx)
 
     {
+        alert=new AlertDialog.Builder(ctx).create();
         dialog=new ProgressDialog(ctx);
         context=ctx;
 

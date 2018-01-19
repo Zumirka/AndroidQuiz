@@ -1,5 +1,7 @@
 package com.example.zumirka.androidquiz.AsyncTasks;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.example.zumirka.androidquiz.Model.Answer;
@@ -38,8 +40,10 @@ public class TestDownloadBackgroundWorker extends AsyncTask<Void,Void,Void>{
     private int caterogryId;
     private int difficult;
     private TestActivity TA;
-    public TestDownloadBackgroundWorker(int caterogryId,int difficult, TestActivity ta)
+    ProgressDialog dialog;
+    public TestDownloadBackgroundWorker(int caterogryId, int difficult, TestActivity ta, Context ctx)
     {
+        dialog=new ProgressDialog(ctx);
         this.caterogryId=caterogryId;
         this.difficult=difficult;
         this.TA=ta;
@@ -116,11 +120,17 @@ public class TestDownloadBackgroundWorker extends AsyncTask<Void,Void,Void>{
     }
     @Override
     protected void onPreExecute() {
-
+        dialog.setMessage("Logowanie...");
+        dialog.setIndeterminate(true);
+        dialog.setCancelable(false);
+        dialog.show();
     }
     @Override
     protected void onPostExecute(Void result) {
         TA.QuestionTaker(test);
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
 
 
     }
