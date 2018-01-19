@@ -30,17 +30,17 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 public class TestActivity extends AppCompatActivity {
 
-    TextView QuestionText, Clock, QuestionNumber;
+    TextView questionText, clock, questionNumber;
     String time,userName="";
-    int IdCategory, IdofCategory, index = 0, PointsCount = 0;
-    int difficulty, diff, CorrectAnswear = 0;
-    Test QuestionsOfTest;
-    Boolean EndTest = false,canCreateTest=true;
+    int idCategory, idOfCategory, index = 0, pointsCount = 0;
+    int difficulty, diff, correctAnswear = 0;
+
+    Boolean endTest = false,canCreateTest=true;
     ArrayList<Entry> entries;
-    ArrayList<String> PieEntryLabels;
-    ArrayList<Question> questionsForTest;
+    ArrayList<String> pieEntryLabels;
+    ArrayList<Question> questionsFromTest;
     ArrayList<Answear> answears;
-    ArrayList<Button> AnswearButtons = new ArrayList<Button>();
+    ArrayList<Button> answearButtons = new ArrayList<Button>();
     Thread t;
     Date diffDate=new Date();
     PieChart pieChart;
@@ -59,7 +59,7 @@ public class TestActivity extends AppCompatActivity {
             int min=sec/60;
             int hour=min/60;
             sec%=60;
-            Clock.setText(String.format("%02d",hour)+":"+String.format("%02d",min)+":"+String.format("%02d",sec));
+            clock.setText(String.format("%02d",hour)+":"+String.format("%02d",min)+":"+String.format("%02d",sec));
             handler.postDelayed(this,0);
 
         }
@@ -71,47 +71,44 @@ public class TestActivity extends AppCompatActivity {
         SharedPreferences resSettings = getSharedPreferences("BYLECO", MODE_PRIVATE);
         userName = resSettings.getString("USER_NAME", "empty");
         setContentView(R.layout.activity_test);
-        //startClock();
-        IdCategory = getIntent().getIntExtra("IdCategory", IdofCategory);
+        idCategory = getIntent().getIntExtra("IdCategory", idOfCategory);
         difficulty = getIntent().getIntExtra("Difficulty", diff);
         difficulty++;
-        CreateTest();
+        createTest();
         if(canCreateTest) { InitializeControls();}
 
 
     }
 
-    public void AddValuesToPIEENTRY() {
-        int PercentValue = CorrectAnswear * 100 / PointsCount;
+    public void addValuesToPIEENTRY() {
+        int PercentValue = correctAnswear * 100 / pointsCount;
         entries.add(new BarEntry(PercentValue, 0));
         entries.add(new BarEntry((100 - PercentValue), 1));
 
 
     }
 
-    public void AddValuesToPieEntryLabels() {
+    public void addValuesToPieEntryLabels() {
 
-        PieEntryLabels.add("Dobre odpowiedzi");
-        PieEntryLabels.add("Złe odpowiedzi");
+        pieEntryLabels.add("Dobre odpowiedzi");
+        pieEntryLabels.add("Złe odpowiedzi");
 
 
     }
 
 
-    void CreateTest() {
+    void createTest() {
 
-        TestDownloadBackgroundWorker test = new TestDownloadBackgroundWorker(IdCategory, difficulty, this,this);
+        TestDownloadBackgroundWorker test = new TestDownloadBackgroundWorker(idCategory, difficulty, this,this);
         test.execute();
 
     }
 
-    public void QuestionTaker(Test testGenerate) {
-        this.QuestionsOfTest = testGenerate;
-        questionsForTest = QuestionsOfTest.getQuestions();
-       // CreateQuestion();
-        if(questionsForTest.size()>0) {
+    public void questionTaker(Test generatedTest) {
+        questionsFromTest = generatedTest.getQuestions();
+        if(questionsFromTest.size()>0) {
             canCreateTest=true;
-            CreateQuestion();
+            createQuestion();
             startClock();
         }
         else
@@ -123,57 +120,57 @@ public class TestActivity extends AppCompatActivity {
 
     }
 
-    private void CreateQuestion() {
+    private void createQuestion() {
 
-        QuestionText.setText(questionsForTest.get(index).getContent());
-        answears = questionsForTest.get(index).getAnswears();
+        questionText.setText(questionsFromTest.get(index).getContent());
+        answears = questionsFromTest.get(index).getAnswears();
         for (int i = 0; i < answears.size(); i++) {
 
             if (answears.get(i).isCorrect()) {
-                PointsCount += difficulty;
+                pointsCount += difficulty;
 
             }
-            AnswearButtons.get(i).setText(answears.get(i).getContent());
-            AnswearButtons.get(i).setVisibility(View.VISIBLE);
+            answearButtons.get(i).setText(answears.get(i).getContent());
+            answearButtons.get(i).setVisibility(View.VISIBLE);
         }
         index++;
-        QuestionNumber.setText(Integer.toString(index) + "/" + Integer.toString(questionsForTest.size()));
+        questionNumber.setText(Integer.toString(index) + "/" + Integer.toString(questionsFromTest.size()));
 
 
     }
 
-    public void OnClickButton(View view) {
+    public void onClickButton(View view) {
         switch (view.getId()) {
             case R.id.Answear1:
                 if (answears.get(0).isCorrect())
                 {
-                    CorrectAnswear+=difficulty;
+                    correctAnswear +=difficulty;
                 }
                 break;
             case R.id.Answear2:
                 if (answears.get(1).isCorrect())
                 {
-                    CorrectAnswear+=difficulty;
+                    correctAnswear +=difficulty;
                 }
                 break;
             case R.id.Answear3:
                 if (answears.get(2).isCorrect())
                 {
-                    CorrectAnswear+=difficulty;
+                    correctAnswear +=difficulty;
                 }
                 break;
         }
-        IfEnd();
+        nextQuestion();
 
     }
 
 
-    private void IfEnd() {
-        if (index != questionsForTest.size()) {
-            CreateQuestion();
-        } else if (index == questionsForTest.size()) {
-            for (int i = 0; i < AnswearButtons.size(); i++) {
-                AnswearButtons.get(i).setVisibility(View.GONE);
+    private void nextQuestion() {
+        if (index != questionsFromTest.size()) {
+            createQuestion();
+        } else if (index == questionsFromTest.size()) {
+            for (int i = 0; i < answearButtons.size(); i++) {
+                answearButtons.get(i).setVisibility(View.GONE);
 
             }
             EndOfTest();
@@ -183,19 +180,26 @@ public class TestActivity extends AppCompatActivity {
     private void EndOfTest() {
 
 
-        EndTest = true;
+        endTest = true;
         stopClock();
-        time=Clock.getText().toString();
-        QuestionText.setText("Test Ukończono.\n Wynik: " + CorrectAnswear + "/" + PointsCount + " punktów.\n Czas przejścia testu: "+time);
-        QuestionNumber.setText("");
+        time= clock.getText().toString();
+        questionText.setText("Test Ukończono.\n Wynik: " + correctAnswear + "/" + pointsCount + " punktów.\n Czas przejścia testu: "+time);
+        questionNumber.setText("");
 
-        AddValuesToPIEENTRY();
-        AddValuesToPieEntryLabels();
+        addValuesToPIEENTRY();
+        addValuesToPieEntryLabels();
+        drawChart();
+        clock.setText("");
+        AddStatistic();
+
+    }
+
+    private void drawChart() {
         pieChart.setVisibility(View.VISIBLE);
 
         pieDataSet = new PieDataSet(entries, "");
 
-        pieData = new PieData(PieEntryLabels, pieDataSet);
+        pieData = new PieData(pieEntryLabels, pieDataSet);
 
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
@@ -204,17 +208,15 @@ public class TestActivity extends AppCompatActivity {
         pieData.setValueFormatter(new PercentFormatter());
         pieData.setValueTextSize(10f);
         pieChart.animateY(3000);
-        Clock.setText("");
-        AddStatistic();
-
     }
 
+    //TODO type!!!
     private void AddStatistic()
     {
 
         String type="addStats";
         addStatisticBackgroundWorker addStatisticBackgroundWorker = new addStatisticBackgroundWorker(this);
-        addStatisticBackgroundWorker.execute(type,userName,Integer.toString(IdCategory),Integer.toString(difficulty),time,Integer.toString(CorrectAnswear));
+        addStatisticBackgroundWorker.execute(type,userName,Integer.toString(idCategory),Integer.toString(difficulty),time,Integer.toString(correctAnswear));
     }
 
 
@@ -235,16 +237,16 @@ public class TestActivity extends AppCompatActivity {
 
     private void InitializeControls() {
 
-            Clock = findViewById(R.id.ClockView);
-            QuestionText = findViewById(R.id.Question);
-            AnswearButtons.add((Button) findViewById(R.id.Answear1));
-            AnswearButtons.add((Button) findViewById(R.id.Answear2));
-            AnswearButtons.add((Button) findViewById(R.id.Answear3));
+            clock = findViewById(R.id.ClockView);
+            questionText = findViewById(R.id.Question);
+            answearButtons.add((Button) findViewById(R.id.Answear1));
+            answearButtons.add((Button) findViewById(R.id.Answear2));
+            answearButtons.add((Button) findViewById(R.id.Answear3));
             pieChart = (PieChart) findViewById(R.id.piechart);
             pieChart.setVisibility(View.GONE);
             entries = new ArrayList<>();
-            PieEntryLabels = new ArrayList<String>();
-            QuestionNumber = findViewById(R.id.QuestionNumber);
+            pieEntryLabels = new ArrayList<String>();
+            questionNumber = findViewById(R.id.QuestionNumber);
 
         }
 

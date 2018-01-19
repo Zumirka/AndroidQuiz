@@ -123,7 +123,7 @@ public class TestDownloadBackgroundWorker extends AsyncTask<Void,Void,Void>{
     }
     @Override
     protected void onPostExecute(Void result) {
-        TA.QuestionTaker(test);
+        TA.questionTaker(test);
         if (dialog.isShowing()) {
             dialog.dismiss();
         }
