@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/carmel"
-    tools:context="com.example.zumirka.androidquiz.RegistredActivity">
+    tools:context="com.example.zumirka.androidquiz.RegisterActivity">
     <!-- Login progress -->
     <ProgressBar
         android:id="@+id/login_progress"

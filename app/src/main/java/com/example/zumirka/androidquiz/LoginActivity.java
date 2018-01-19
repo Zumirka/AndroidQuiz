@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.example.zumirka.androidquiz.AsyncTasks.LoginBackgroundWorker;
+import com.example.zumirka.androidquiz.Utilities.ConnectionChecker;
 import com.example.zumirka.androidquiz.Utilities.Encryption;
 
 
@@ -36,20 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    Boolean isInternetConnection() {
-        ConnectivityManager connectivity = (ConnectivityManager) this.getSystemService(this.CONNECTIVITY_SERVICE);
-        if (connectivity != null) {
-            NetworkInfo[] info = connectivity.getAllNetworkInfo();
-            if (info != null) {
-                for (int i = 0; i < info.length; i++) {
-                    if (info[i].getState() == NetworkInfo.State.CONNECTED) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
+
 
     // TODO
     Boolean CheckIfNotEmpty() {
@@ -69,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
     public void OnLogin(View view) {
         ProgressDialog dialog = prepareDialog();
 
-        if (isInternetConnection()) {
+        if (ConnectionChecker.checkInternetConnection(this)) {
             if (CheckIfNotEmpty()) {
                 dialog.show();
                 sendLoginAndPassword();
@@ -122,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void OpenReg(View view) {
-        startActivity(new Intent(this, RegistredActivity.class));
+        startActivity(new Intent(this, RegisterActivity.class));
     }
 
 

@@ -7,7 +7,7 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.example.zumirka.androidquiz.RegistredActivity;
+import com.example.zumirka.androidquiz.RegisterActivity;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -25,10 +25,10 @@ import java.net.URLEncoder;
 public class RegistredBackgroundWorker extends AsyncTask<String,Void,String> {
     Context context;
     String[] data;
-    RegistredActivity re;
+    RegisterActivity re;
     ProgressDialog dialog;
 
-    public RegistredBackgroundWorker(RegistredActivity reg, Context con)
+    public RegistredBackgroundWorker(RegisterActivity reg, Context con)
 
     {
         dialog=new ProgressDialog(con);
@@ -100,7 +100,7 @@ public class RegistredBackgroundWorker extends AsyncTask<String,Void,String> {
         if (dialog.isShowing()) {
             dialog.dismiss();
         }
-        Toast.makeText(context, "Zostałeś zarejestrowany.\n Możesz się zalogować.", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Zostałeś zarejestrowany\n Możesz się zalogować", Toast.LENGTH_LONG).show();
          re.finish();
 
     }
