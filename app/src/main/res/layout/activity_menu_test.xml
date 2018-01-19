@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:onClick="StartTestOnClick"
+        android:onClick="startTestOnClick"
         android:text="Wylosuj Test"
         app:layout_constraintTop_toBottomOf="@+id/spinnerDiff"
         tools:layout_editor_absoluteX="0dp" />
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
-        android:onClick="AddQuestionOnClick"
+        android:onClick="addQuestionOnClick"
         android:text="Dodaj Pytanie"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
