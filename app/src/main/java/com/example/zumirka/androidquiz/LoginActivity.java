@@ -5,15 +5,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
 import com.example.zumirka.androidquiz.AsyncTasks.LoginBackgroundWorker;
 import com.example.zumirka.androidquiz.Utilities.ConnectionChecker;
 import com.example.zumirka.androidquiz.Utilities.Encryption;

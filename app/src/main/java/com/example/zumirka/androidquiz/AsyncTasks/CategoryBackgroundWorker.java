@@ -19,10 +19,13 @@ import java.util.ArrayList;
 public class CategoryBackgroundWorker extends AsyncTask<Void,Void,Void> {
     MainMenuActivity mm;
    ArrayList<Category> categoriesList=new ArrayList<>();
+   String getCategory_url="http://quizinz.herokuapp.com/getCategory.php";
 
 
-   public CategoryBackgroundWorker (MainMenuActivity MMA)
+
+    public CategoryBackgroundWorker (MainMenuActivity MMA)
     {
+
         this.mm=MMA;
     }
 
@@ -30,7 +33,6 @@ public class CategoryBackgroundWorker extends AsyncTask<Void,Void,Void> {
     @Override
     protected Void doInBackground(Void... voids) {
 
-        String getCategory_url="http://quizinz.herokuapp.com/getCategory.php";
 
 
             try {

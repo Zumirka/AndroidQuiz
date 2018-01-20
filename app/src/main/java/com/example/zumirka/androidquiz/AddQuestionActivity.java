@@ -48,7 +48,6 @@ public class AddQuestionActivity extends AppCompatActivity {
         difficulty++;
         rewriteControls();
         if (areTextFieldNotEmpty()) {
-            String type = "addQuestion";
             for (int i = 0; i < controls.size(); i++) {
                 controls.get(i).setText("");
             }

@@ -1,7 +1,5 @@
 package com.example.zumirka.androidquiz.AsyncTasks;
 
-
-import android.app.AlertDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -19,31 +17,31 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 
-public class AddQuestionBackgroundWorker extends AsyncTask<Void, Void, Void> {
-    Context context;
-    String[] data;
-    String idCategory;
-    String diff;
-    String question;
-    String answ1;
-    String answ2;
-    String answ3;
-    String register_url = "http://quizinz.herokuapp.com/addQuestion.php";
+public class AddStatisticBackgroundWorker extends AsyncTask<Void, Void, Void> {
 
-    public AddQuestionBackgroundWorker(Context ctx, String idCategory, String diff, String question, String answ1, String answ2, String answ3) {
+    Context context;
+    String userName;
+    String idCategory;
+    String difficulty;
+    String time;
+    String correctAnswear;
+    String register_url = "http://quizinz.herokuapp.com/addStatistic.php";
+
+    public AddStatisticBackgroundWorker(Context ctx, String userName, String idCategory, String difficulty, String time, String correctAnswear) {
         context = ctx;
+        this.userName = userName;
         this.idCategory = idCategory;
-        this.diff = diff;
-        this.question = question;
-        this.answ1 = answ1;
-        this.answ2 = answ2;
-        this.answ3 = answ3;
+        this.difficulty = difficulty;
+        this.time = time;
+        this.correctAnswear = correctAnswear;
     }
 
     @Override
-    protected Void doInBackground(Void... voids) {
+    protected Void doInBackground(Void... params) {
+
 
         try {
+
 
             HttpURLConnection httpURLConnection = getHttpURLConnection();
             OutputStream outputStream = httpURLConnection.getOutputStream();
@@ -57,10 +55,12 @@ public class AddQuestionBackgroundWorker extends AsyncTask<Void, Void, Void> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return null;
+
     }
 
-    //odbierz dane
+    @NonNull
     private void reciveData(HttpURLConnection httpURLConnection) throws IOException {
         InputStream inputStream = httpURLConnection.getInputStream();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
@@ -82,6 +82,15 @@ public class AddQuestionBackgroundWorker extends AsyncTask<Void, Void, Void> {
     }
 
     @NonNull
+    private String parseQuery() throws UnsupportedEncodingException {
+        return URLEncoder.encode("UserName", "UTF-8") + "=" + URLEncoder.encode(userName, "UTF-8") + "&"
+                + URLEncoder.encode("CategoryId", "UTF-8") + "=" + URLEncoder.encode(idCategory, "UTF-8") + "&"
+                + URLEncoder.encode("Difficulty", "UTF-8") + "=" + URLEncoder.encode(difficulty, "UTF-8") + "&"
+                + URLEncoder.encode("Time", "UTF-8") + "=" + URLEncoder.encode(time, "UTF-8") + "&"
+                + URLEncoder.encode("Points", "UTF-8") + "=" + URLEncoder.encode(correctAnswear, "UTF-8");
+    }
+
+    @NonNull
     private HttpURLConnection getHttpURLConnection() throws IOException {
         URL url = new URL(register_url);
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -91,20 +100,8 @@ public class AddQuestionBackgroundWorker extends AsyncTask<Void, Void, Void> {
         return httpURLConnection;
     }
 
-    @NonNull
-    private String parseQuery() throws UnsupportedEncodingException {
-        return URLEncoder.encode("idCategory", "UTF-8") + "=" + URLEncoder.encode(idCategory, "UTF-8") + "&"
-                + URLEncoder.encode("diff", "UTF-8") + "=" + URLEncoder.encode(diff, "UTF-8") + "&"
-                + URLEncoder.encode("question", "UTF-8") + "=" + URLEncoder.encode(question, "UTF-8") + "&"
-                + URLEncoder.encode("answ1", "UTF-8") + "=" + URLEncoder.encode(answ1, "UTF-8") + "&"
-                + URLEncoder.encode("answ2", "UTF-8") + "=" + URLEncoder.encode(answ2, "UTF-8") + "&"
-                + URLEncoder.encode("answ3", "UTF-8") + "=" + URLEncoder.encode(answ3, "UTF-8");
-    }
-
-
     @Override
     protected void onPreExecute() {
-
     }
 
     @Override
@@ -112,14 +109,7 @@ public class AddQuestionBackgroundWorker extends AsyncTask<Void, Void, Void> {
 
     }
 
-    @Override
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
     }
-
-    public String[] getData() {
-        return data;
-    }
 }
-
-

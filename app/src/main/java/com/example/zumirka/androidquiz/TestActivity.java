@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.zumirka.androidquiz.AsyncTasks.addStatisticBackgroundWorker;
+import com.example.zumirka.androidquiz.AsyncTasks.AddStatisticBackgroundWorker;
 import com.example.zumirka.androidquiz.AsyncTasks.TestDownloadBackgroundWorker;
 import com.example.zumirka.androidquiz.Model.Answear;
 import com.example.zumirka.androidquiz.Model.Question;
@@ -214,9 +214,9 @@ public class TestActivity extends AppCompatActivity {
     private void AddStatistic()
     {
 
-        String type="addStats";
-        addStatisticBackgroundWorker addStatisticBackgroundWorker = new addStatisticBackgroundWorker(this);
-        addStatisticBackgroundWorker.execute(type,userName,Integer.toString(idCategory),Integer.toString(difficulty),time,Integer.toString(correctAnswear));
+
+        AddStatisticBackgroundWorker addStatisticBackgroundWorker = new AddStatisticBackgroundWorker(this,userName,Integer.toString(idCategory),Integer.toString(difficulty),time,Integer.toString(correctAnswear));
+        addStatisticBackgroundWorker.execute();
     }
 
 
