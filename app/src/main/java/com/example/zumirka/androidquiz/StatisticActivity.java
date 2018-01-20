@@ -20,7 +20,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.example.zumirka.androidquiz.AsyncTasks.getStatisticBackgroundWorker;
+import com.example.zumirka.androidquiz.AsyncTasks.GetStatisticBackgroundWorker;
 import com.example.zumirka.androidquiz.Model.Statistic;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -119,10 +119,8 @@ public class StatisticActivity extends AppCompatActivity implements
 
     // TODO type
     private void TakeStatistic() {
-
-        String type = "getStats";
-        getStatisticBackgroundWorker getStatisticBackgroundWorker = new getStatisticBackgroundWorker(this);
-        getStatisticBackgroundWorker.execute(type, userName, time1, time2);
+        GetStatisticBackgroundWorker getStatisticBackgroundWorker = new GetStatisticBackgroundWorker(this,userName, time1, time2);
+        getStatisticBackgroundWorker.execute();
         l.removeAllViewsInLayout();
     }
 

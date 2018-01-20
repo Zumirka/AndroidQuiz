@@ -38,7 +38,6 @@ public class CategoryBackgroundWorker extends AsyncTask<Void, Void, Void> {
 
         try {
             HttpURLConnection httpURLConnection = getHttpURLConnection();
-
             String result = reciveData(httpURLConnection);
             return parseCategory(result);
 
