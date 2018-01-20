@@ -60,8 +60,6 @@ public class LoginBackgroundWorker extends AsyncTask<String, Void, String> {
             String result = reciveData(httpURLConnection);
             return result;
 
-        }catch (UnknownHostException e) {
-            alert.setMessage("Brak połączenia z internetem");
         }
         catch (MalformedURLException e) {
             e.printStackTrace();

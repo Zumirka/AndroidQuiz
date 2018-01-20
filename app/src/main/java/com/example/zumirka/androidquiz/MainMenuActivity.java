@@ -1,5 +1,7 @@
 package com.example.zumirka.androidquiz;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.zumirka.androidquiz.AsyncTasks.CategoryBackgroundWorker;
 import com.example.zumirka.androidquiz.Model.Category;
+import com.example.zumirka.androidquiz.Utilities.ConnectionChecker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,8 +87,32 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void takeCategory() {
-        CategoryBackgroundWorker categoryBW = new CategoryBackgroundWorker(this);
-        categoryBW.execute();
+        ProgressDialog dialog = prepareDialog();
+        if (ConnectionChecker.checkInternetConnection(this)) {
+            dialog.show();
+            CategoryBackgroundWorker categoryBW = new CategoryBackgroundWorker(this);
+            categoryBW.execute();
+        }
+        else {
+
+            showErrorDialog();
+        }
+        dialog.hide();
+
+    }
+    private void showErrorDialog() {
+        AlertDialog alert;
+        alert = new AlertDialog.Builder(this).create();
+        alert.setTitle(this.getString(R.string.status));
+        alert.setMessage(this.getString(R.string.internetCommunicat));
+        alert.show();
+    }
+    private ProgressDialog prepareDialog() {
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage(this.getString(R.string.getData));
+        dialog.setIndeterminate(true);
+        dialog.setCancelable(false);
+        return dialog;
     }
 
     public void menuTestActivityStart() {
@@ -110,7 +137,11 @@ public class MainMenuActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.Stats:
-                startStatisticActivity(this);
+                if (ConnectionChecker.checkInternetConnection(this)) {
+                startStatisticActivity(this);}
+                else {
+                    showErrorDialog();
+                }
                 return true;
             case R.id.Creators:
                 startInformationActivity(this, "Creators");
@@ -119,7 +150,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 startInformationActivity(this, "AppInfo");
                 return true;
             case R.id.LogOut:
-                Toast.makeText(getApplicationContext(), "Aplikacja została zamknięta", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), this.getString(R.string.logOut), Toast.LENGTH_LONG).show();
                 System.exit(0);
                 return true;
             default:

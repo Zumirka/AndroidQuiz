@@ -1,5 +1,6 @@
 package com.example.zumirka.androidquiz;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.zumirka.androidquiz.AsyncTasks.AddQuestionBackgroundWorker;
+import com.example.zumirka.androidquiz.Utilities.ConnectionChecker;
 
 import java.util.ArrayList;
 
@@ -44,19 +46,23 @@ public class AddQuestionActivity extends AppCompatActivity {
     }
 
     public void addQuestionOnClick(View v) {
-        difficulty = difficultySpinner.getSelectedItemPosition();
-        difficulty++;
-        rewriteControls();
-        if (areTextFieldNotEmpty()) {
-            for (int i = 0; i < controls.size(); i++) {
-                controls.get(i).setText("");
+        if (ConnectionChecker.checkInternetConnection(this)) {
+            difficulty = difficultySpinner.getSelectedItemPosition();
+            difficulty++;
+            rewriteControls();
+            if (areTextFieldNotEmpty()) {
+                for (int i = 0; i < controls.size(); i++) {
+                    controls.get(i).setText("");
+                }
+                Toast.makeText(this, "Pytanie zostało dodane", Toast.LENGTH_LONG).show();
+                AddQuestionBackgroundWorker addqBackgroundWorker = new AddQuestionBackgroundWorker(this, Integer.toString(idCategory), Integer.toString(difficulty), question, answ1, answ2, answ3);
+                addqBackgroundWorker.execute();
             }
-            Toast.makeText(this, "Pytanie zostało dodane", Toast.LENGTH_LONG).show();
-            AddQuestionBackgroundWorker addqBackgroundWorker = new AddQuestionBackgroundWorker(this, Integer.toString(idCategory), Integer.toString(difficulty), question, answ1, answ2, answ3);
-            addqBackgroundWorker.execute();
+
         }
-
-
+        else {
+            showErrorDialog();
+        }
     }
 
     void rewriteControls() {
@@ -77,5 +83,11 @@ public class AddQuestionActivity extends AppCompatActivity {
         }
         return t;
     }
-
+    private void showErrorDialog() {
+        AlertDialog alert;
+        alert = new AlertDialog.Builder(this).create();
+        alert.setTitle(this.getString(R.string.status));
+        alert.setMessage(this.getString(R.string.internetCommunicat));
+        alert.show();
+    }
 }

@@ -13,7 +13,12 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="status">Status:</string>
+    <string name="internetCommunicat">Brak połączenia z internetem</string>
+    <string name="wrongAmountQuestion">Nie można wygenerować testu</string>
     <string name="not_empty">Pole nie może być puste</string>
+    <string name="logOut">Zostałeś wylogowany</string>
+    <string name="getData">Pobieranie danych...</string>
     <string name="not_equal">Hasła się różnią</string>
     <string-array name="difficulty_array">
         <item>Łatwy</item>

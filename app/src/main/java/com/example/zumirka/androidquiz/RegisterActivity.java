@@ -17,7 +17,6 @@ import java.security.NoSuchAlgorithmException;
 public class RegisterActivity extends AppCompatActivity {
 
     EditText login, password, repeat_password;
-    AlertDialog alert;
     Context con;
     Encryption en = new Encryption();
 
@@ -67,24 +66,23 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         } else {
-            showAlert();
+            showErrorDialog();
         }
 
     }
 
-    private void showAlert() {
+    private void showErrorDialog() {
         AlertDialog alert;
         alert = new AlertDialog.Builder(this).create();
-        alert.setTitle("Status Logowania:");
+        alert.setTitle("Status:");
         alert.setMessage("Brak połączenia z internetem.");
         alert.show();
     }
 
     private void sendData(String str_login, String str_password) {
-        String type = "register";
         String hsh = en.CalculateHash(str_password, str_login);
-        RegistredBackgroundWorker backgroundWorker = new RegistredBackgroundWorker(this, con);
-        backgroundWorker.execute(type, str_login, hsh);
+        RegistredBackgroundWorker backgroundWorker = new RegistredBackgroundWorker(this, con,str_login,hsh);
+        backgroundWorker.execute();
     }
 
 }

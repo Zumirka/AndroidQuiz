@@ -76,13 +76,13 @@ public class LoginActivity extends AppCompatActivity {
     private void showErrorDialog() {
         AlertDialog alert;
         alert = new AlertDialog.Builder(this).create();
-        alert.setTitle("Status Logowania:");
-        alert.setMessage("Brak połączenia z internetem.");
+        alert.setTitle(this.getString(R.string.status));
+        alert.setMessage(this.getString(R.string.internetCommunicat));
         alert.show();
     }
 
     private void saveInSharedPref() {
-        SharedPreferences saveSettings = getSharedPreferences("BYLECO", MODE_PRIVATE);
+        SharedPreferences saveSettings = getSharedPreferences("userName", MODE_PRIVATE);
         SharedPreferences.Editor editor = saveSettings.edit();
         editor.putString("USER_NAME", login);
         editor.commit();

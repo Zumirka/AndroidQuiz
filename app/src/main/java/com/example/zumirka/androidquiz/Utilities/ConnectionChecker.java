@@ -4,10 +4,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-/**
- * Created by Zumirka on 19.01.2018.
- */
-
 public class ConnectionChecker
 {
     public static Boolean checkInternetConnection(Context ctx)
