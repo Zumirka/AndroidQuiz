@@ -1,6 +1,9 @@
 package com.example.zumirka.androidquiz.AsyncTasks;
 
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.example.zumirka.androidquiz.MainMenuActivity;
 import com.example.zumirka.androidquiz.Model.Category;
 
@@ -36,44 +39,11 @@ public class CategoryBackgroundWorker extends AsyncTask<Void,Void,Void> {
 
 
             try {
-                URL url = new URL(getCategory_url);
+                HttpURLConnection httpURLConnection = getHttpURLConnection();
 
-                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
-                httpURLConnection.setRequestMethod("GET");
-                httpURLConnection.setDoOutput(true);
-                httpURLConnection.setDoInput(true);
+                String result = reciveData(httpURLConnection);
+                return parseCategory(result);
 
-                InputStream inputStream=httpURLConnection.getInputStream();
-                BufferedReader bufferedReader=new BufferedReader((new InputStreamReader(inputStream,"UTF-8")));
-
-                String result="";
-                String line;
-                while((line=bufferedReader.readLine())!=null)
-                {
-                    result+=line;
-                }
-                bufferedReader.close();
-                httpURLConnection.disconnect();
-
-                try
-                {
-                    JSONArray jsArray=new JSONArray(result);
-                    JSONObject jsObject=null;
-
-                    for(int i=0;i<jsArray.length();i++)
-                    {
-                        Category category= new Category();
-                        jsObject=jsArray.getJSONObject(i);
-
-                        category.setId(jsObject.getInt("Id"));
-                        category.setName(jsObject.getString("Name"));
-                        categoriesList.add(category);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                return null;
             }
             catch(MalformedURLException e) {
                 e.printStackTrace();
@@ -81,6 +51,55 @@ public class CategoryBackgroundWorker extends AsyncTask<Void,Void,Void> {
                 e.printStackTrace();
             }
         return null;
+    }
+
+    @Nullable
+    private Void parseCategory(String result) {
+        try
+        {
+            JSONArray jsArray=new JSONArray(result);
+            JSONObject jsObject=null;
+
+            for(int i=0;i<jsArray.length();i++)
+            {
+                Category category= new Category();
+                jsObject=jsArray.getJSONObject(i);
+
+                category.setId(jsObject.getInt("Id"));
+                category.setName(jsObject.getString("Name"));
+                categoriesList.add(category);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @NonNull
+    private String reciveData(HttpURLConnection httpURLConnection) throws IOException {
+        InputStream inputStream=httpURLConnection.getInputStream();
+        BufferedReader bufferedReader=new BufferedReader((new InputStreamReader(inputStream,"UTF-8")));
+
+        String result="";
+        String line;
+        while((line=bufferedReader.readLine())!=null)
+        {
+            result+=line;
+        }
+        bufferedReader.close();
+        httpURLConnection.disconnect();
+        return result;
+    }
+
+    @NonNull
+    private HttpURLConnection getHttpURLConnection() throws IOException {
+        URL url = new URL(getCategory_url);
+        HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+        httpURLConnection.setRequestMethod("GET");
+        httpURLConnection.setDoOutput(true);
+        httpURLConnection.setDoInput(true);
+        return httpURLConnection;
     }
 
 
