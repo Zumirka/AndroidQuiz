@@ -2,12 +2,12 @@ package com.example.zumirka.androidquiz;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -28,7 +28,6 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class TestActivity extends AppCompatActivity {
 
@@ -69,7 +68,7 @@ public class TestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences resSettings = getSharedPreferences("BYLECO", MODE_PRIVATE);
+        SharedPreferences resSettings = getSharedPreferences("userName", MODE_PRIVATE);
         userName = resSettings.getString("USER_NAME", "empty");
         setContentView(R.layout.activity_test);
         idCategory = getIntent().getIntExtra("IdCategory", idOfCategory);
@@ -120,9 +119,8 @@ public class TestActivity extends AppCompatActivity {
             startClock();
         } else {
             canCreateTest = false;
-            this.finish();
             Toast.makeText(this, this.getString(R.string.wrongAmountQuestion), Toast.LENGTH_LONG).show();
-
+            this.startActivity(new Intent(this, MenuTestActivity.class));
         }
 
     }
@@ -253,10 +251,10 @@ public class TestActivity extends AppCompatActivity {
 
     }
 
-    public void finish()
-    {
+    public void finish() {
         this.finish();
     }
+
     private void showErrorDialog() {
         AlertDialog alert;
         alert = new AlertDialog.Builder(this).create();

@@ -3,7 +3,8 @@
         <item
             android:id="@+id/Stats"
             android:orderInCategory="1"
-            android:title="Statystyki">
+            android:title="Statystyki"
+            >
         </item>
         <item
             android:id="@+id/Creators"

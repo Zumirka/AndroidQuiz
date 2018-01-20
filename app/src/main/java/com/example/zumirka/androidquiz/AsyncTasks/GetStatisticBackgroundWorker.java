@@ -3,6 +3,7 @@ package com.example.zumirka.androidquiz.AsyncTasks;
 
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.example.zumirka.androidquiz.Model.Category;
 import com.example.zumirka.androidquiz.Model.Statistic;
@@ -57,15 +58,8 @@ public class GetStatisticBackgroundWorker extends AsyncTask<Void, Void, Void> {
             String post_data = parseQuery();
             sendQuery(outputStream, bufferWriter, post_data);
             String result = reciveData(httpURLConnection);
+            parseStatistic(result);
 
-
-            try {
-                parseStatistic(result);
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return null;
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -75,20 +69,29 @@ public class GetStatisticBackgroundWorker extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
-    private void parseStatistic(String result) throws JSONException {
-        JSONArray jsArray = new JSONArray(result);
-        JSONObject jsObject = null;
+    @Nullable
+    private Void parseStatistic(String result)  {
 
-        for (int i = 0; i < jsArray.length(); i++) {
-            Statistic stats = new Statistic();
-            jsObject = jsArray.getJSONObject(i);
-            stats.setCategory(new Category(jsObject.getString("CategoryName")));
-            stats.setDifficulty(jsObject.getString("Difficulty"));
-            stats.setTime(jsObject.getString("Time"));
-            stats.setPoints(jsObject.getString("Points"));
-            stats.setDate(jsObject.getString("Date"));
-            statsList.add(stats);
+        try {
+            JSONArray jsArray = new JSONArray(result);
+            JSONObject jsObject = null;
+
+            for (int i = 0; i < jsArray.length(); i++) {
+                Statistic stats = new Statistic();
+                jsObject = jsArray.getJSONObject(i);
+                stats.setCategory(new Category(jsObject.getString("CategoryName")));
+                stats.setDifficulty(jsObject.getString("Difficulty"));
+                stats.setTime(jsObject.getString("Time"));
+                stats.setPoints(jsObject.getString("Points"));
+                stats.setDate(jsObject.getString("Date"));
+                statsList.add(stats);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+        return null;
+
     }
 
     @NonNull

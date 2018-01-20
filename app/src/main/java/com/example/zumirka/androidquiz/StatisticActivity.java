@@ -80,7 +80,7 @@ public class StatisticActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistic);
-        SharedPreferences resSettings = getSharedPreferences("BYLECO", MODE_PRIVATE);
+        SharedPreferences resSettings = getSharedPreferences("userName", MODE_PRIVATE);
         initGUI(resSettings);
         setData();
 

@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import com.example.zumirka.androidquiz.Model.Answear;
 import com.example.zumirka.androidquiz.Model.Question;
 import com.example.zumirka.androidquiz.Model.Test;
+import com.example.zumirka.androidquiz.R;
 import com.example.zumirka.androidquiz.TestActivity;
 
 import org.json.JSONArray;
@@ -36,6 +37,7 @@ public class TestDownloadBackgroundWorker extends AsyncTask<Void, Void, Void> {
 
     ProgressDialog dialog;
     AlertDialog alert;
+    Context ctx;
     String getCategory_url = "http://quizinz.herokuapp.com/getTest.php";
     private Test test;
     private int caterogryId;
@@ -43,6 +45,7 @@ public class TestDownloadBackgroundWorker extends AsyncTask<Void, Void, Void> {
     private TestActivity TA;
 
     public TestDownloadBackgroundWorker(int caterogryId, int difficult, TestActivity ta, Context ctx) {
+        this.ctx=ctx;
         dialog = new ProgressDialog(ctx);
         alert = new AlertDialog.Builder(ctx).create();
         this.caterogryId = caterogryId;
@@ -142,7 +145,7 @@ public class TestDownloadBackgroundWorker extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPreExecute() {
-        dialog.setMessage("Logowanie...");
+        dialog.setMessage(ctx.getString(R.string.getData));
         dialog.setIndeterminate(true);
         dialog.setCancelable(false);
         dialog.show();

@@ -33,13 +33,15 @@
 
     <Spinner
         android:id="@+id/SpinnerDiff"
+        style="@style/Widget.AppCompat.Spinner.DropDown"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:popupBackground="@color/carmel"
         app:layout_constraintTop_toBottomOf="@+id/TextView2"
         tools:layout_editor_absoluteX="0dp"
-        android:background="@color/carmel"
-        android:popupBackground="@color/carmel"/>
+
+        />
 
     <TextView
         android:id="@+id/TextView2"
@@ -47,8 +49,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="Wybierz poziom trudności"
+        android:textColor="@color/brown"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@+id/AddQuestionBtn"
-        tools:layout_editor_absoluteX="0dp"
-        android:textColor="@color/brown"/>
+        tools:layout_editor_absoluteX="0dp" />
 
 </android.support.constraint.ConstraintLayout>
