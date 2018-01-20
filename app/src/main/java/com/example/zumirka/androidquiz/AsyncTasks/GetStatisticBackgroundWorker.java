@@ -1,6 +1,6 @@
 package com.example.zumirka.androidquiz.AsyncTasks;
 
-import android.content.Context;
+
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
@@ -27,11 +27,10 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 
+public class GetStatisticBackgroundWorker extends AsyncTask<Void, Void, Void> {
 
-public class GetStatisticBackgroundWorker extends AsyncTask<Void,Void,Void> {
 
-
-    ArrayList<Statistic> statsList=new ArrayList<>();
+    ArrayList<Statistic> statsList = new ArrayList<>();
     StatisticActivity statisticActivity;
     String userName;
     String startTime;
@@ -40,53 +39,49 @@ public class GetStatisticBackgroundWorker extends AsyncTask<Void,Void,Void> {
 
 
     public GetStatisticBackgroundWorker(StatisticActivity statsActivity, String userName, String startTime, String endTime) {
-        this.statisticActivity=statsActivity;
-        this.userName=userName;
-        this.startTime=startTime;
-        this.endTime=endTime;
+        this.statisticActivity = statsActivity;
+        this.userName = userName;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     @Override
     protected Void doInBackground(Void... params) {
 
 
-
         try {
 
             HttpURLConnection httpURLConnection = getHttpURLConnection();
             OutputStream outputStream = httpURLConnection.getOutputStream();
-            BufferedWriter bufferWriter= new BufferedWriter(new OutputStreamWriter(outputStream,"UTF-8"));
+            BufferedWriter bufferWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
             String post_data = parseQuery();
             sendQuery(outputStream, bufferWriter, post_data);
             String result = reciveData(httpURLConnection);
 
 
-            try
-            {
+            try {
                 parseStatistic(result);
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             return null;
-        }
-        catch(MalformedURLException e) {
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-            return null;
-}
+        return null;
+    }
 
     private void parseStatistic(String result) throws JSONException {
-        JSONArray jsArray=new JSONArray(result);
-        JSONObject jsObject=null;
+        JSONArray jsArray = new JSONArray(result);
+        JSONObject jsObject = null;
 
-        for(int i=0;i<jsArray.length();i++)
-        {
-            Statistic stats=new Statistic();
-            jsObject=jsArray.getJSONObject(i);
+        for (int i = 0; i < jsArray.length(); i++) {
+            Statistic stats = new Statistic();
+            jsObject = jsArray.getJSONObject(i);
             stats.setCategory(new Category(jsObject.getString("CategoryName")));
             stats.setDifficulty(jsObject.getString("Difficulty"));
             stats.setTime(jsObject.getString("Time"));
@@ -99,12 +94,11 @@ public class GetStatisticBackgroundWorker extends AsyncTask<Void,Void,Void> {
     @NonNull
     private String reciveData(HttpURLConnection httpURLConnection) throws IOException {
         InputStream inputStream = httpURLConnection.getInputStream();
-        BufferedReader bufferedReader= new BufferedReader(new InputStreamReader(inputStream,"UTF-8"));
-        String result="";
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+        String result = "";
         String line;
-        while((line=bufferedReader.readLine())!=null)
-        {
-            result+=line;
+        while ((line = bufferedReader.readLine()) != null) {
+            result += line;
         }
         bufferedReader.close();
         inputStream.close();
@@ -121,15 +115,15 @@ public class GetStatisticBackgroundWorker extends AsyncTask<Void,Void,Void> {
 
     @NonNull
     private String parseQuery() throws UnsupportedEncodingException {
-        return URLEncoder.encode("UserName","UTF-8")+"="+URLEncoder.encode(userName,"UTF-8")+"&"
-                        +URLEncoder.encode("time1","UTF-8")+"="+URLEncoder.encode(startTime,"UTF-8")+"&"
-                        +URLEncoder.encode("time2","UTF-8")+"="+URLEncoder.encode(endTime,"UTF-8");
+        return URLEncoder.encode("UserName", "UTF-8") + "=" + URLEncoder.encode(userName, "UTF-8") + "&"
+                + URLEncoder.encode("time1", "UTF-8") + "=" + URLEncoder.encode(startTime, "UTF-8") + "&"
+                + URLEncoder.encode("time2", "UTF-8") + "=" + URLEncoder.encode(endTime, "UTF-8");
     }
 
     @NonNull
     private HttpURLConnection getHttpURLConnection() throws IOException {
         URL url = new URL(register_url);
-        HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
         httpURLConnection.setRequestMethod("GET");
         httpURLConnection.setDoOutput(true);
         httpURLConnection.setDoInput(true);
@@ -144,6 +138,7 @@ public class GetStatisticBackgroundWorker extends AsyncTask<Void,Void,Void> {
     protected void onPostExecute(Void v) {
         statisticActivity.setCategory(statsList);
     }
+
     protected void onProgressUpdate(Void... values) {
         super.onProgressUpdate(values);
     }

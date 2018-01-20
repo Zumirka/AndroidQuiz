@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
 import com.example.zumirka.androidquiz.AsyncTasks.LoginBackgroundWorker;
 import com.example.zumirka.androidquiz.Utilities.ConnectionChecker;
 import com.example.zumirka.androidquiz.Utilities.Encryption;
@@ -21,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
 
     Encryption en = new Encryption();
     String login;
+    String password;
     private EditText loginEditText, passwordEditText;
 
     @Override
@@ -32,8 +34,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
-
-
 
 
     // TODO
@@ -90,11 +90,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private void sendLoginAndPassword() {
         login = loginEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
-        String type = "login";
+        password = passwordEditText.getText().toString();
         String SHAPassword = en.CalculateHash(password, login);
-        LoginBackgroundWorker backgroundWorker = new LoginBackgroundWorker(this);
-        backgroundWorker.execute(type, login, SHAPassword);
+        LoginBackgroundWorker backgroundWorker = new LoginBackgroundWorker(this, login, SHAPassword);
+        backgroundWorker.execute();
     }
 
     @NonNull

@@ -1,7 +1,6 @@
 package com.example.zumirka.androidquiz.AsyncTasks;
 
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
