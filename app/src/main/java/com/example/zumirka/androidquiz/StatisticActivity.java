@@ -1,5 +1,6 @@
 package com.example.zumirka.androidquiz;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.SharedPreferences;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 
 import com.example.zumirka.androidquiz.AsyncTasks.GetStatisticBackgroundWorker;
 import com.example.zumirka.androidquiz.Model.Statistic;
+import com.example.zumirka.androidquiz.Utilities.ConnectionChecker;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -88,16 +90,16 @@ public class StatisticActivity extends AppCompatActivity implements
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void initGUI(SharedPreferences resSettings) {
         userName = resSettings.getString("USER_NAME", "empty");
-        l = (TableLayout) findViewById(R.id.table);
-        fromDate = (ImageButton) findViewById(R.id.fromDate);
-        toDate = (ImageButton) findViewById(R.id.toDate);
-        fromDateTxt = findViewById(R.id.fromDateTxt);
-        toDateTxt = findViewById(R.id.toDateTxt);
+        l = (TableLayout) findViewById(R.id.Table);
+        fromDate = (ImageButton) findViewById(R.id.FromDate);
+        toDate = (ImageButton) findViewById(R.id.ToDate);
+        fromDateTxt = findViewById(R.id.FromDateTxt);
+        toDateTxt = findViewById(R.id.ToDateTxt);
         cal = Calendar.getInstance();
         year = cal.get(Calendar.YEAR);
         month = cal.get(Calendar.MONTH);
         day = cal.get(Calendar.DAY_OF_MONTH);
-        lineChart = (LineChart) findViewById(R.id.linechart);
+        lineChart = (LineChart) findViewById(R.id.Linechart);
         lineChart.setOnChartGestureListener(this);
         lineChart.setOnChartValueSelectedListener(this);
         Legend l = lineChart.getLegend();
@@ -119,11 +121,24 @@ public class StatisticActivity extends AppCompatActivity implements
 
     // TODO type
     private void TakeStatistic() {
-        GetStatisticBackgroundWorker getStatisticBackgroundWorker = new GetStatisticBackgroundWorker(this,userName, time1, time2);
-        getStatisticBackgroundWorker.execute();
-        l.removeAllViewsInLayout();
-    }
+        if (ConnectionChecker.checkInternetConnection(this)) {
+            GetStatisticBackgroundWorker getStatisticBackgroundWorker = new GetStatisticBackgroundWorker(this, userName, time1, time2);
+            getStatisticBackgroundWorker.execute();
+            l.removeAllViewsInLayout();
+        }
+        else {
+            showErrorDialog();
+        }
 
+
+    }
+    private void showErrorDialog() {
+        AlertDialog alert;
+        alert = new AlertDialog.Builder(this).create();
+        alert.setTitle(this.getString(R.string.status));
+        alert.setMessage(this.getString(R.string.internetCommunicat));
+        alert.show();
+    }
     public void setCategory(ArrayList<Statistic> stats) {
         this.statisticsList = stats;
         if (stats.size() != 0) {
@@ -173,50 +188,61 @@ public class StatisticActivity extends AppCompatActivity implements
         TextView txt = new TextView(this);
         txt.setText(statisticsList.get(i).getCategory().getName());
         txt.setGravity(Gravity.CENTER);
+        txt.setTextColor(getResources().getColor(R.color.brown));
         tr.addView(txt);
         txt = new TextView(this);
         txt.setText(statisticsList.get(i).getDifficulty());
         txt.setGravity(Gravity.CENTER);
+        txt.setTextColor(getResources().getColor(R.color.brown));
         tr.addView(txt);
         txt = new TextView(this);
         txt.setText(statisticsList.get(i).getTime());
         txt.setGravity(Gravity.CENTER);
+        txt.setTextColor(getResources().getColor(R.color.brown));
         tr.addView(txt);
         txt = new TextView(this);
         txt.setText(statisticsList.get(i).getPoints());
         txt.setGravity(Gravity.CENTER);
+        txt.setTextColor(getResources().getColor(R.color.brown));
         tr.addView(txt);
         txt = new TextView(this);
         txt.setText(statisticsList.get(i).getDate());
         txt.setGravity(Gravity.CENTER);
+        txt.setTextColor(getResources().getColor(R.color.brown));
         tr.addView(txt);
-        tr.setBackgroundColor(Color.LTGRAY);
+        tr.setBackgroundColor(getResources().getColor(R.color.lightbrown));
         tr.setPadding(2, 4, 3, 3);
     }
 
     private void initTableHeader() {
+
         trl = new TableRow(this);
         TextView labels = new TextView(this);
         labels.setText("Kategoria");
         labels.setGravity(Gravity.CENTER);
+        labels.setTextColor(getResources().getColor(R.color.white));
         trl.addView(labels);
         labels = new TextView(this);
         labels.setText("Poziom trudności");
         labels.setGravity(Gravity.CENTER);
+        labels.setTextColor(getResources().getColor(R.color.white));
         trl.addView(labels);
         labels = new TextView(this);
         labels.setText("Czas");
         labels.setGravity(Gravity.CENTER);
+        labels.setTextColor(getResources().getColor(R.color.white));
         trl.addView(labels);
         labels = new TextView(this);
         labels.setText("Punkty");
         labels.setGravity(Gravity.CENTER);
+        labels.setTextColor(getResources().getColor(R.color.white));
         trl.addView(labels);
         labels = new TextView(this);
         labels.setText("Data");
         labels.setGravity(Gravity.CENTER);
+        labels.setTextColor(getResources().getColor(R.color.white));
         trl.addView(labels);
-        trl.setBackgroundColor(Color.GRAY);
+        trl.setBackgroundColor(getResources().getColor(R.color.brown));
         trl.setPadding(1, 4, 1, 3);
     }
 
@@ -259,8 +285,8 @@ public class StatisticActivity extends AppCompatActivity implements
         // set the line to be drawn like this "- - - - - -"
         // set1.enableDashedLine(10f, 5f, 0f);
         // set1.enableDashedHighlightLine(10f, 5f, 0f);
-        set1.setColor(Color.BLACK);
-        set1.setCircleColor(Color.BLACK);
+        set1.setColor(getResources().getColor(R.color.brown));
+        set1.setCircleColor(getResources().getColor(R.color.brown));
         set1.setLineWidth(1f);
         set1.setCircleRadius(3f);
         set1.setDrawCircleHole(false);

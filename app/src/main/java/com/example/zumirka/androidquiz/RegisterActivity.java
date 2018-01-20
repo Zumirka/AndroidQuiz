@@ -42,6 +42,11 @@ public class RegisterActivity extends AppCompatActivity {
             password.setError(this.getString(R.string.not_empty));
             return false;
         }
+        if(repeat_password.getText().toString().trim().length()==0)
+        {
+            repeat_password.setError(this.getString(R.string.not_empty));
+            return false;
+        }
 
         return true;
     }
@@ -74,8 +79,8 @@ public class RegisterActivity extends AppCompatActivity {
     private void showErrorDialog() {
         AlertDialog alert;
         alert = new AlertDialog.Builder(this).create();
-        alert.setTitle("Status:");
-        alert.setMessage("Brak połączenia z internetem.");
+        alert.setTitle(this.getString(R.string.status));
+        alert.setMessage(this.getString(R.string.internetCommunicat));
         alert.show();
     }
 

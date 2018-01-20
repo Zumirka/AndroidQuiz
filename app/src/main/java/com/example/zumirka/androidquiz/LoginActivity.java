@@ -35,8 +35,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
-    // TODO
     Boolean CheckIfNotEmpty() {
         if (loginEditText.getText().toString().trim().length() == 0) {
             loginEditText.setError(this.getString(R.string.not_empty));
@@ -50,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-    // TODO byleco co robi input manager
     public void OnLogin(View view) {
         ProgressDialog dialog = prepareDialog();
 
@@ -99,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
     @NonNull
     private ProgressDialog prepareDialog() {
         ProgressDialog dialog = new ProgressDialog(this);
-        dialog.setMessage("Logowanie...");
+        dialog.setMessage(this.getString(R.string.loginProgress));
         dialog.setIndeterminate(true);
         dialog.setCancelable(false);
         return dialog;

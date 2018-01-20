@@ -71,16 +71,17 @@ public class AddQuestionActivity extends AppCompatActivity {
         answ2 = controls.get(2).getText().toString();
         answ3 = controls.get(3).getText().toString();
     }
-// TODO
+
     Boolean areTextFieldNotEmpty() {
-        Boolean t = false;
+        Boolean t = true;
         for (int i = 0; i < controls.size(); i++) {
             if (controls.get(i).getText().toString().trim().length() == 0) {
                 controls.get(i).setError(this.getString(R.string.not_empty));
                 t = false;
-            } else
-                t = true;
+            }
+
         }
+
         return t;
     }
     private void showErrorDialog() {

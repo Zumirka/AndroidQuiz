@@ -1,6 +1,7 @@
 package com.example.zumirka.androidquiz;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -210,6 +211,7 @@ public class TestActivity extends AppCompatActivity {
         pieChart.setDescription("");
         pieData.setValueFormatter(new PercentFormatter());
         pieData.setValueTextSize(10f);
+        pieChart.setHoleColor(getResources().getColor(R.color.carmel));
         pieChart.animateY(3000);
     }
 
@@ -243,7 +245,7 @@ public class TestActivity extends AppCompatActivity {
         answearButtons.add((Button) findViewById(R.id.Answear1));
         answearButtons.add((Button) findViewById(R.id.Answear2));
         answearButtons.add((Button) findViewById(R.id.Answear3));
-        pieChart = (PieChart) findViewById(R.id.piechart);
+        pieChart = (PieChart) findViewById(R.id.Piechart);
         pieChart.setVisibility(View.GONE);
         entries = new ArrayList<>();
         pieEntryLabels = new ArrayList<String>();
@@ -251,12 +253,23 @@ public class TestActivity extends AppCompatActivity {
 
     }
 
+    public void finish()
+    {
+        this.finish();
+    }
     private void showErrorDialog() {
         AlertDialog alert;
         alert = new AlertDialog.Builder(this).create();
         alert.setTitle(this.getString(R.string.status));
         alert.setMessage(this.getString(R.string.internetCommunicat));
         alert.show();
+        alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                finish();
+
+            }
+        });
 
     }
 

@@ -9,11 +9,13 @@
 
 
     <ImageButton
-        android:id="@+id/fromDate"
-        android:layout_width="44dp"
-        android:layout_height="39dp"
+        android:id="@+id/FromDate"
+        style="@android:style/Widget.Holo.Light.ImageButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/carmel"
         android:cropToPadding="true"
         android:onClick="onClickV"
         android:src="@drawable/calendar_icon"
@@ -21,44 +23,48 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/toDate"
-        android:layout_width="44dp"
-        android:layout_height="39dp"
+        android:id="@+id/ToDate"
+        style="@android:style/Widget.Holo.Light.ImageButton"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/carmel"
         android:cropToPadding="true"
         android:onClick="onClickV"
         android:src="@drawable/calendar_icon"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fromDate" />
+        app:layout_constraintTop_toBottomOf="@+id/FromDate" />
 
     <EditText
-        android:id="@+id/fromDateTxt"
+        android:id="@+id/FromDateTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="6dp"
         android:ems="10"
         android:enabled="false"
         android:focusable="false"
         android:inputType="date"
         android:singleLine="true"
-        app:layout_constraintStart_toEndOf="@+id/fromDate"
+        android:textColor="@color/brown"
+        app:layout_constraintStart_toEndOf="@+id/FromDate"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/toDateTxt"
+        android:id="@+id/ToDateTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="6dp"
         android:ems="10"
         android:enabled="false"
         android:focusable="false"
         android:inputType="date"
         android:singleLine="true"
-        app:layout_constraintStart_toEndOf="@+id/toDate"
-        app:layout_constraintTop_toBottomOf="@+id/fromDateTxt" />
+        android:textColor="@color/brown"
+        app:layout_constraintStart_toEndOf="@+id/ToDate"
+        app:layout_constraintTop_toBottomOf="@+id/FromDateTxt" />
 
     <ScrollView
         android:id="@+id/ScrollV"
@@ -76,7 +82,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toDateTxt"
+        app:layout_constraintTop_toBottomOf="@+id/ToDateTxt"
         app:layout_constraintVertical_bias="0.0">
 
         <HorizontalScrollView
@@ -84,11 +90,11 @@
             android:layout_height="wrap_content">
 
             <TableLayout
-                android:id="@+id/table"
+                android:id="@+id/Table"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:background="#000000"
+                android:background="@color/brown"
                 android:gravity="bottom"
                 android:orientation="horizontal"
                 android:visibility="visible">
@@ -101,7 +107,7 @@
     </ScrollView>
 
     <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/linechart"
+        android:id="@+id/Linechart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="250dp"

@@ -11,22 +11,14 @@
     android:background="@color/carmel"
     tools:context="com.example.zumirka.androidquiz.LoginActivity">
 
-    <!-- Login progress -->
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone"/>
 
     <ScrollView
-        android:id="@+id/login_form"
+        android:id="@+id/Scroll_view_login"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/login_form_l"
+            android:id="@+id/Login_form_l"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -68,7 +60,7 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/sign_in_button"
+                android:id="@+id/Sign_in_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -79,7 +71,7 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/regi_in_button"
+                android:id="@+id/Regi_in_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"

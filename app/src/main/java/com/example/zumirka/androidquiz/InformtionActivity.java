@@ -13,7 +13,7 @@ public class InformtionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information);
         type = getIntent().getExtras().getString("Type", chooseTyp);
-        text = findViewById(R.id.textView);
+        text = findViewById(R.id.Information);
         checkType();
     }
 

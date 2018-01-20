@@ -6,22 +6,15 @@
     android:layout_height="match_parent"
     android:background="@color/carmel"
     tools:context="com.example.zumirka.androidquiz.RegisterActivity">
-    <!-- Login progress -->
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone"/>
+
 
     <ScrollView
-        android:id="@+id/registred_form"
+        android:id="@+id/Registred_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/login_form"
+            android:id="@+id/Login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">

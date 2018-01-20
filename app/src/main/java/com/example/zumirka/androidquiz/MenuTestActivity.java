@@ -17,7 +17,7 @@ public class MenuTestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_test);
         idOfCategory = getIntent().getIntExtra("idCategory", id);
-        difficultySpinner = findViewById(R.id.spinnerDiff);
+        difficultySpinner = findViewById(R.id.SpinnerDiff);
         fillSpinner();
 
     }
