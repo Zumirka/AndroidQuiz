@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,9 +13,12 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -44,6 +46,7 @@ public class StatisticActivity extends AppCompatActivity implements
 
 
     String userName = "", time1, time2;
+    String difficulty;
     ArrayList<Statistic> statisticsList = new ArrayList<>();
     TableLayout l;
     ImageButton fromDate, toDate;
@@ -57,7 +60,6 @@ public class StatisticActivity extends AppCompatActivity implements
     LineChart lineChart;
     TextView emptyTableTxt;
     int buttonId;
-
     public DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int selectedYear,
                               int selectedMonth, int selectedDay) {
@@ -74,18 +76,18 @@ public class StatisticActivity extends AppCompatActivity implements
 
         }
     };
+    Spinner difficultySpinner;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistic);
         SharedPreferences resSettings = getSharedPreferences("userName", MODE_PRIVATE);
         initGUI(resSettings);
-        setData();
 
 
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void initGUI(SharedPreferences resSettings) {
@@ -102,9 +104,12 @@ public class StatisticActivity extends AppCompatActivity implements
         lineChart = (LineChart) findViewById(R.id.Linechart);
         lineChart.setOnChartGestureListener(this);
         lineChart.setOnChartValueSelectedListener(this);
+        lineChart.setVisibility(View.GONE);
         Legend l = lineChart.getLegend();
         l.setForm(Legend.LegendForm.LINE);
         emptyTableTxt = findViewById(R.id.EmptyTableTxt);
+        difficultySpinner = findViewById(R.id.spinnerDiff);
+        fillSpinner();
     }
 
     public void onClickV(View v) {
@@ -112,25 +117,24 @@ public class StatisticActivity extends AppCompatActivity implements
         showDialog(0);
     }
 
-    @Override
-    @Deprecated
+
     protected Dialog onCreateDialog(int id) {
 
         return new DatePickerDialog(this, datePickerListener, year, month, day);
     }
-    
+
     private void TakeStatistic() {
         if (ConnectionChecker.checkInternetConnection(this)) {
             GetStatisticBackgroundWorker getStatisticBackgroundWorker = new GetStatisticBackgroundWorker(this, userName, time1, time2);
             getStatisticBackgroundWorker.execute();
             l.removeAllViewsInLayout();
-        }
-        else {
+        } else {
             showErrorDialog();
         }
 
 
     }
+
     private void showErrorDialog() {
         AlertDialog alert;
         alert = new AlertDialog.Builder(this).create();
@@ -138,13 +142,14 @@ public class StatisticActivity extends AppCompatActivity implements
         alert.setMessage(this.getString(R.string.internetCommunicat));
         alert.show();
     }
+
     public void setCategory(ArrayList<Statistic> stats) {
         this.statisticsList = stats;
         if (stats.size() != 0) {
             emptyTableTxt.setText("");
             initTableHeader();
             l.addView(trl);
-
+            difficulty = difficultySpinner.getSelectedItem().toString();
             for (int i = 0; i < statisticsList.size(); i++) {
                 insertData(i);
                 l.addView(tr);
@@ -171,8 +176,8 @@ public class StatisticActivity extends AppCompatActivity implements
 
                     }
                 });
-
             }
+            setData();
         } else {
             l.removeAllViews();
             emptyTableTxt.setText("Brak statystyk");
@@ -243,28 +248,36 @@ public class StatisticActivity extends AppCompatActivity implements
         trl.addView(labels);
         trl.setBackgroundColor(getResources().getColor(R.color.brown));
         trl.setPadding(1, 4, 1, 3);
+
     }
 
     //set x value on chart
     private ArrayList<String> setXAxisValues() {
         ArrayList<String> xVals = new ArrayList<String>();
-        xVals.add("10");
-        xVals.add("20");
-        xVals.add("30");
-        xVals.add("30.5");
-        xVals.add("40");
+        lineChart.setVisibility(View.GONE);
+        for (int i = 0; i < statisticsList.size(); i++) {
+            if (statisticsList.get(i).getDifficulty().equals(difficulty)) {
+                xVals.add(statisticsList.get(i).getDate());
 
+            } else
+                xVals.add(statisticsList.get(i).getDate());
+
+        }
         return xVals;
     }
 
     //set y value on chart
     private ArrayList<Entry> setYAxisValues() {
         ArrayList<Entry> yVals = new ArrayList<Entry>();
-        yVals.add(new Entry(60, 0));
-        yVals.add(new Entry(48, 1));
-        yVals.add(new Entry(70.5f, 2));
-        yVals.add(new Entry(100, 3));
-        yVals.add(new Entry(180.9f, 4));
+        lineChart.setVisibility(View.GONE);
+        for (int i = 0; i < statisticsList.size(); i++) {
+            if (statisticsList.get(i).getDifficulty().equals(difficulty)) {
+                yVals.add(new Entry(Float.parseFloat(statisticsList.get(i).getPoints()), i));
+            } else
+                yVals.add(new Entry(Float.parseFloat(statisticsList.get(i).getPoints()), i));
+        }
+
+        // yVals.add(new Entry(180.9f, 4));
 
         return yVals;
     }
@@ -275,36 +288,56 @@ public class StatisticActivity extends AppCompatActivity implements
         ArrayList<Entry> yVals = setYAxisValues();
 
         LineDataSet set1;
+        if (xVals.size() > 0) {
+            // create a dataset and give it a type
+            set1 = new LineDataSet(yVals, difficulty.toString());
+            set1.setFillAlpha(110);
+            // set1.setFillColor(Color.RED);
 
-        // create a dataset and give it a type
-        set1 = new LineDataSet(yVals, "DataSet 1");
-        set1.setFillAlpha(110);
-        // set1.setFillColor(Color.RED);
+            // set the line to be drawn like this "- - - - - -"
+            // set1.enableDashedLine(10f, 5f, 0f);
+            // set1.enableDashedHighlightLine(10f, 5f, 0f);
+            set1.setColor(getResources().getColor(R.color.brown));
+            set1.setCircleColor(getResources().getColor(R.color.brown));
+            set1.setLineWidth(1f);
+            set1.setCircleRadius(3f);
+            set1.setDrawCircleHole(false);
+            set1.setValueTextSize(9f);
 
-        // set the line to be drawn like this "- - - - - -"
-        // set1.enableDashedLine(10f, 5f, 0f);
-        // set1.enableDashedHighlightLine(10f, 5f, 0f);
-        set1.setColor(getResources().getColor(R.color.brown));
-        set1.setCircleColor(getResources().getColor(R.color.brown));
-        set1.setLineWidth(1f);
-        set1.setCircleRadius(3f);
-        set1.setDrawCircleHole(false);
-        set1.setValueTextSize(9f);
-        set1.setDrawFilled(true);
+            set1.setDrawFilled(true);
+            ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+            dataSets.add(set1); // add the datasets
 
-        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
-        dataSets.add(set1); // add the datasets
+            // create a data object with the datasets
+            LineData data = new LineData(xVals, dataSets);
 
-        // create a data object with the datasets
-        LineData data = new LineData(xVals, dataSets);
+            // set data
+            lineChart.setVisibility(View.VISIBLE);
+            lineChart.setData(data);
+            lineChart.setDescription("");
+            lineChart.setTouchEnabled(true);
+            lineChart.setDragEnabled(true);
+            lineChart.setScaleEnabled(false);
+        }
+    }
 
-        // set data
-        lineChart.setData(data);
-        // lineChart.setTouchEnabled(false);
-        lineChart.setDragEnabled(false);
-        lineChart.setScaleEnabled(false);
+    void fillSpinner() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.difficulty_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        difficultySpinner.setAdapter(adapter);
+
 
     }
+void onClickSpinner(MotionEvent me) {
+    String selectedItem = difficultySpinner.getSelectedItem().toString();
+    if (!selectedItem.equals("")) {
+        if (fromDateTxt.length() > 0 && toDateTxt.length() > 0) {
+            difficulty = selectedItem;
+            setData();
+        }
+    }
+}
 
     @Override
     public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
