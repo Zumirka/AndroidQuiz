@@ -39,13 +39,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
+                <AutoCompleteTextView
                     android:id="@+id/Password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Hasło"
+                    android:hint="@string/password"
                     android:imeActionId="6"
-                    android:imeActionLabel="@string/action_sign_in"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
@@ -60,13 +59,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
+                <AutoCompleteTextView
                     android:id="@+id/PasswordRepeat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Powtórz Hasło"
+                    android:hint="@string/repeatPassword"
                     android:imeActionId="6"
-                    android:imeActionLabel="@string/action_sign_in"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"

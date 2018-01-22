@@ -17,6 +17,11 @@
             android:title="O Aplikacji">
         </item>
         <item
+            android:id="@+id/Suggestion"
+            android:orderInCategory="2"
+            android:title="Wyślij e-mail z propozycją zmian">
+        </item>
+        <item
             android:id="@+id/LogOut"
             android:orderInCategory="3"
             android:title="Wyloguj">

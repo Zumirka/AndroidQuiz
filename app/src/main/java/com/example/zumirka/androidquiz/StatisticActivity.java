@@ -118,8 +118,7 @@ public class StatisticActivity extends AppCompatActivity implements
 
         return new DatePickerDialog(this, datePickerListener, year, month, day);
     }
-
-    // TODO type
+    
     private void TakeStatistic() {
         if (ConnectionChecker.checkInternetConnection(this)) {
             GetStatisticBackgroundWorker getStatisticBackgroundWorker = new GetStatisticBackgroundWorker(this, userName, time1, time2);

@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    // Sprawdzanie czy kontrolki nie są puste
     Boolean CheckIfNotEmpty() {
         if (loginEditText.getText().toString().trim().length() == 0) {
             loginEditText.setError(this.getString(R.string.not_empty));
@@ -48,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
+    // obsługiwanie kliknięcia buttona
     public void OnLogin(View view) {
         ProgressDialog dialog = prepareDialog();
 
@@ -70,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    //pokazanie komunikatu o braku połączenia z internetem
     private void showErrorDialog() {
         AlertDialog alert;
         alert = new AlertDialog.Builder(this).create();
@@ -77,14 +80,19 @@ public class LoginActivity extends AppCompatActivity {
         alert.setMessage(this.getString(R.string.internetCommunicat));
         alert.show();
     }
+    //zapisanie nazwy użytkownika w danych aplikacji
 
     private void saveInSharedPref() {
+        //inicjalizacja obiektu SharedPreferences. Przyjmuje dwa parametry:
+        // nazwę pliku w któym chcemy przechowywać dane o tryb w jakim ma byc otwarty plik z naszymi danymi
         SharedPreferences saveSettings = getSharedPreferences("userName", MODE_PRIVATE);
+        // zapisanie zmian
         SharedPreferences.Editor editor = saveSettings.edit();
         editor.putString("USER_NAME", login);
         editor.commit();
     }
 
+    // Przepisanie tekstów z kontrolek, stworzenie SHA hasła i stworzenie obiektu LoginBackgroundWorker
     private void sendLoginAndPassword() {
         login = loginEditText.getText().toString();
         password = passwordEditText.getText().toString();
@@ -93,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
         backgroundWorker.execute();
     }
 
+    // wyświetlenie postępu logowania
     @NonNull
     private ProgressDialog prepareDialog() {
         ProgressDialog dialog = new ProgressDialog(this);
@@ -102,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
         return dialog;
     }
 
+    //obsługa buttona otwierającego okno rejestracji
     public void OpenReg(View view) {
         startActivity(new Intent(this, RegisterActivity.class));
     }

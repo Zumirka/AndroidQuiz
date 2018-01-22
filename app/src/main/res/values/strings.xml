@@ -4,6 +4,7 @@
     <!-- Strings related to login -->
     <string name="login">Login</string>
     <string name="password">Hasło</string>
+    <string name="repeatPassword">Powtórz Hasło</string>
     <string name="action_sign_in">Zaloguj</string>
     <string name="action_rejestration_in">Zarejestruj</string>
     <string name="error_invalid_email">This email address is invalid</string>

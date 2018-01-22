@@ -23,7 +23,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.net.UnknownHostException;
 
 
 public class LoginBackgroundWorker extends AsyncTask<String, Void, String> {
@@ -35,6 +34,7 @@ public class LoginBackgroundWorker extends AsyncTask<String, Void, String> {
     String login_url = "http://quizinz.herokuapp.com/login.php";
     ProgressDialog dialog;
 
+    //konstruktor pobierajacy kontekst naszego okna, login i SHA hasła
     public LoginBackgroundWorker(Context ctx, String login, String password)
 
     {
@@ -60,8 +60,7 @@ public class LoginBackgroundWorker extends AsyncTask<String, Void, String> {
             String result = reciveData(httpURLConnection);
             return result;
 
-        }
-        catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,6 +70,7 @@ public class LoginBackgroundWorker extends AsyncTask<String, Void, String> {
         return null;
     }
 
+    //metoda przepisuje otrzymane dane(które zwraca zapytanie) do Stringa
     @NonNull
     private String reciveData(HttpURLConnection httpURLConnection) throws IOException {
         InputStream inputStream = httpURLConnection.getInputStream();
@@ -80,13 +80,14 @@ public class LoginBackgroundWorker extends AsyncTask<String, Void, String> {
         while ((line = bufferedReader.readLine()) != null) {
             result += line;
         }
-
+//zamykanie połączenia
         bufferedReader.close();
         inputStream.close();
         httpURLConnection.disconnect();
         return result;
     }
 
+    //wysłanie zapytania
     private void sendQuery(OutputStream outputStream, BufferedWriter bufferWriter, String post_data) throws IOException {
         bufferWriter.write(post_data);
         bufferWriter.flush();
@@ -94,12 +95,14 @@ public class LoginBackgroundWorker extends AsyncTask<String, Void, String> {
         outputStream.close();
     }
 
+    //tworzenie zapytania
     @NonNull
     private String parseQuery() throws UnsupportedEncodingException {
         return URLEncoder.encode("login", "UTF-8") + "=" + URLEncoder.encode(login, "UTF-8") + "&"
                 + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
     }
 
+    //nawiązanie połączenie
     @NonNull
     private HttpURLConnection getHttpURLConnection() throws IOException {
         URL url = new URL(login_url);
@@ -110,6 +113,7 @@ public class LoginBackgroundWorker extends AsyncTask<String, Void, String> {
         return httpURLConnection;
     }
 
+    // wyświetlenie komunikatu podczas wykonywania/trwania zapytania
     @Override
     protected void onPreExecute() {
         dialog.setMessage("Logowanie...");
@@ -120,6 +124,7 @@ public class LoginBackgroundWorker extends AsyncTask<String, Void, String> {
 
     }
 
+    // wyświetlenie komunikatu po zakończonym zapytaniu
     @Override
     protected void onPostExecute(String result) {
 

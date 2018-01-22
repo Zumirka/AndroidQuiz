@@ -10,13 +10,17 @@
     <TextView
         android:id="@+id/Information"
         android:layout_width="match_parent"
-        android:layout_height="59dp"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="3dp"
+        android:layout_marginStart="3dp"
         android:layout_marginTop="64dp"
         android:gravity="center_horizontal"
         android:text=""
         android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="24sp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        android:textColor="@color/brown"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

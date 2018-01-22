@@ -149,6 +149,9 @@ public class MainMenuActivity extends AppCompatActivity {
             case R.id.AppInfo:
                 startInformationActivity(this, "AppInfo");
                 return true;
+            case R.id.Suggestion:
+                startInformationActivity(this, "Suggestion");
+                return true;
             case R.id.LogOut:
                 Toast.makeText(getApplicationContext(), this.getString(R.string.logOut), Toast.LENGTH_LONG).show();
                 System.exit(0);
