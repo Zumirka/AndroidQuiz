@@ -66,21 +66,12 @@
         app:layout_constraintStart_toEndOf="@+id/ToDate"
         app:layout_constraintTop_toBottomOf="@+id/FromDateTxt" />
 
-    <Spinner
-        android:id="@+id/spinnerDiff"
-        android:layout_width="151dp"
-        android:layout_height="51dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginTop="3dp"
-        android:popupBackground="@color/carmel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <ScrollView
         android:id="@+id/ScrollV"
         style="@android:style/Widget.DeviceDefault.Light.ScrollView"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="374dp"
         android:layout_marginBottom="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginStart="1dp"
@@ -116,19 +107,6 @@
 
     </ScrollView>
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/Linechart"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="250dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="110dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/EmptyTableTxt"
         android:layout_width="match_parent"
@@ -138,15 +116,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="163dp" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="145dp"
-        android:layout_height="44dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginTop="6dp"
-        android:text="Wybierz poziom trudności"
-        android:textColor="@color/brown"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
 </android.support.constraint.ConstraintLayout>

@@ -120,12 +120,18 @@ public class RegistredBackgroundWorker extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        if (dialog.isShowing()) {
-            dialog.dismiss();
+        if (result.equals("1")) {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+            Toast.makeText(ctx, "Zostałeś zarejestrowany\n Możesz się zalogować", Toast.LENGTH_LONG).show();
+            re.finish();
+        } else {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+            re.showErrorDialog("Użytkownik o podanym loginie już istnieje");
         }
-        Toast.makeText(ctx, "Zostałeś zarejestrowany\n Możesz się zalogować", Toast.LENGTH_LONG).show();
-        re.finish();
-
     }
 
     @Override

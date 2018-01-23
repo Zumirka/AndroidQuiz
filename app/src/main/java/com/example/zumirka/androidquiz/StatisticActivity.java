@@ -40,13 +40,10 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import java.util.ArrayList;
 
 
-public class StatisticActivity extends AppCompatActivity implements
-        OnChartGestureListener,
-        OnChartValueSelectedListener {
+public class StatisticActivity extends AppCompatActivity {
 
 
     String userName = "", time1, time2;
-    String difficulty;
     ArrayList<Statistic> statisticsList = new ArrayList<>();
     TableLayout l;
     ImageButton fromDate, toDate;
@@ -76,7 +73,7 @@ public class StatisticActivity extends AppCompatActivity implements
 
         }
     };
-    Spinner difficultySpinner;
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,10 +81,7 @@ public class StatisticActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_statistic);
         SharedPreferences resSettings = getSharedPreferences("userName", MODE_PRIVATE);
         initGUI(resSettings);
-
-
     }
-
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void initGUI(SharedPreferences resSettings) {
@@ -101,15 +95,8 @@ public class StatisticActivity extends AppCompatActivity implements
         year = cal.get(Calendar.YEAR);
         month = cal.get(Calendar.MONTH);
         day = cal.get(Calendar.DAY_OF_MONTH);
-        lineChart = (LineChart) findViewById(R.id.Linechart);
-        lineChart.setOnChartGestureListener(this);
-        lineChart.setOnChartValueSelectedListener(this);
-        lineChart.setVisibility(View.GONE);
-        Legend l = lineChart.getLegend();
-        l.setForm(Legend.LegendForm.LINE);
         emptyTableTxt = findViewById(R.id.EmptyTableTxt);
-        difficultySpinner = findViewById(R.id.spinnerDiff);
-        fillSpinner();
+
     }
 
     public void onClickV(View v) {
@@ -149,7 +136,6 @@ public class StatisticActivity extends AppCompatActivity implements
             emptyTableTxt.setText("");
             initTableHeader();
             l.addView(trl);
-            difficulty = difficultySpinner.getSelectedItem().toString();
             for (int i = 0; i < statisticsList.size(); i++) {
                 insertData(i);
                 l.addView(tr);
@@ -177,7 +163,6 @@ public class StatisticActivity extends AppCompatActivity implements
                     }
                 });
             }
-            setData();
         } else {
             l.removeAllViews();
             emptyTableTxt.setText("Brak statystyk");
@@ -251,141 +236,5 @@ public class StatisticActivity extends AppCompatActivity implements
 
     }
 
-    //set x value on chart
-    private ArrayList<String> setXAxisValues() {
-        ArrayList<String> xVals = new ArrayList<String>();
-        lineChart.setVisibility(View.GONE);
-        for (int i = 0; i < statisticsList.size(); i++) {
-            if (statisticsList.get(i).getDifficulty().equals(difficulty)) {
-                xVals.add(statisticsList.get(i).getDate());
 
-            } else
-                xVals.add(statisticsList.get(i).getDate());
-
-        }
-        return xVals;
-    }
-
-    //set y value on chart
-    private ArrayList<Entry> setYAxisValues() {
-        ArrayList<Entry> yVals = new ArrayList<Entry>();
-        lineChart.setVisibility(View.GONE);
-        for (int i = 0; i < statisticsList.size(); i++) {
-            if (statisticsList.get(i).getDifficulty().equals(difficulty)) {
-                yVals.add(new Entry(Float.parseFloat(statisticsList.get(i).getPoints()), i));
-            } else
-                yVals.add(new Entry(Float.parseFloat(statisticsList.get(i).getPoints()), i));
-        }
-
-        // yVals.add(new Entry(180.9f, 4));
-
-        return yVals;
-    }
-
-    private void setData() {
-        ArrayList<String> xVals = setXAxisValues();
-
-        ArrayList<Entry> yVals = setYAxisValues();
-
-        LineDataSet set1;
-        if (xVals.size() > 0) {
-            // create a dataset and give it a type
-            set1 = new LineDataSet(yVals, difficulty.toString());
-            set1.setFillAlpha(110);
-            // set1.setFillColor(Color.RED);
-
-            // set the line to be drawn like this "- - - - - -"
-            // set1.enableDashedLine(10f, 5f, 0f);
-            // set1.enableDashedHighlightLine(10f, 5f, 0f);
-            set1.setColor(getResources().getColor(R.color.brown));
-            set1.setCircleColor(getResources().getColor(R.color.brown));
-            set1.setLineWidth(1f);
-            set1.setCircleRadius(3f);
-            set1.setDrawCircleHole(false);
-            set1.setValueTextSize(9f);
-
-            set1.setDrawFilled(true);
-            ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
-            dataSets.add(set1); // add the datasets
-
-            // create a data object with the datasets
-            LineData data = new LineData(xVals, dataSets);
-
-            // set data
-            lineChart.setVisibility(View.VISIBLE);
-            lineChart.setData(data);
-            lineChart.setDescription("");
-            lineChart.setTouchEnabled(true);
-            lineChart.setDragEnabled(true);
-            lineChart.setScaleEnabled(false);
-        }
-    }
-
-    void fillSpinner() {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.difficulty_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        difficultySpinner.setAdapter(adapter);
-
-
-    }
-void onClickSpinner(MotionEvent me) {
-    String selectedItem = difficultySpinner.getSelectedItem().toString();
-    if (!selectedItem.equals("")) {
-        if (fromDateTxt.length() > 0 && toDateTxt.length() > 0) {
-            difficulty = selectedItem;
-            setData();
-        }
-    }
-}
-
-    @Override
-    public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
-        Log.i("Gesture", "START, x: " + me.getX() + ", y: " + me.getY());
-    }
-
-    @Override
-    public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
-        Log.i("Gesture", "END, lastGesture: " + lastPerformedGesture);
-
-    }
-
-    @Override
-    public void onChartLongPressed(MotionEvent me) {
-
-    }
-
-    @Override
-    public void onChartDoubleTapped(MotionEvent me) {
-
-    }
-
-    @Override
-    public void onChartSingleTapped(MotionEvent me) {
-
-    }
-
-    @Override
-    public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
-
-    }
-
-    @Override
-    public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
-    }
-
-    @Override
-    public void onChartTranslate(MotionEvent me, float dX, float dY) {
-
-    }
-
-    @Override
-    public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
-
-    }
-
-    @Override
-    public void onNothingSelected() {
-
-    }
 }

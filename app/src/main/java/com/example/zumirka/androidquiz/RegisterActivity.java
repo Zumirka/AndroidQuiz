@@ -71,16 +71,16 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         } else {
-            showErrorDialog();
+            showErrorDialog(this.getString(R.string.internetCommunicat));
         }
 
     }
 
-    private void showErrorDialog() {
+    public void showErrorDialog(String dialog) {
         AlertDialog alert;
         alert = new AlertDialog.Builder(this).create();
         alert.setTitle(this.getString(R.string.status));
-        alert.setMessage(this.getString(R.string.internetCommunicat));
+        alert.setMessage(dialog);
         alert.show();
     }
 

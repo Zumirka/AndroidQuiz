@@ -157,7 +157,5 @@ public class LoginBackgroundWorker extends AsyncTask<String, Void, String> {
         super.onProgressUpdate(values);
     }
 
-    public String[] getData() {
-        return data;
-    }
+   
 }

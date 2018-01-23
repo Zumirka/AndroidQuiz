@@ -47,8 +47,6 @@ public class TestActivity extends AppCompatActivity {
     PieData pieData;
     Handler handler = new Handler();
     long startTime = 0L, timeMs = 0L, timeSwap = 0L, updateTime = 0L;
-    AlertDialog alert;
-
 
     Runnable updateTimeThread = new Runnable() {
         @Override
@@ -251,9 +249,8 @@ public class TestActivity extends AppCompatActivity {
 
     }
 
-    public void finish() {
-        this.finish();
-    }
+
+
 
     private void showErrorDialog() {
         AlertDialog alert;
@@ -270,6 +267,7 @@ public class TestActivity extends AppCompatActivity {
         });
 
     }
+
 
 
 }
