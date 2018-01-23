@@ -109,7 +109,4 @@ public class AddStatisticBackgroundWorker extends AsyncTask<Void, Void, Void> {
 
     }
 
-    protected void onProgressUpdate(Void... values) {
-        super.onProgressUpdate(values);
-    }
 }

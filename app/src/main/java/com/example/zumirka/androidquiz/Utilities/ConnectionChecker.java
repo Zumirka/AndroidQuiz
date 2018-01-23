@@ -8,6 +8,7 @@ public class ConnectionChecker
 {
     public static Boolean checkInternetConnection(Context ctx)
     {
+
         ConnectivityManager connectivity = (ConnectivityManager) ctx.getSystemService(ctx.CONNECTIVITY_SERVICE);
         if(connectivity !=null)
 

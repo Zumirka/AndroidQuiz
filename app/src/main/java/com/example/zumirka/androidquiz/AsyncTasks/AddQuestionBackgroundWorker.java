@@ -20,7 +20,6 @@ import java.net.URLEncoder;
 
 public class AddQuestionBackgroundWorker extends AsyncTask<Void, Void, Void> {
     Context context;
-    String[] data;
     String idCategory;
     String diff;
     String question;
@@ -111,14 +110,6 @@ public class AddQuestionBackgroundWorker extends AsyncTask<Void, Void, Void> {
 
     }
 
-    @Override
-    protected void onProgressUpdate(Void... values) {
-        super.onProgressUpdate(values);
-    }
-
-    public String[] getData() {
-        return data;
-    }
 }
 
 

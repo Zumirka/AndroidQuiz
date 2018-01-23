@@ -109,9 +109,6 @@ public class CategoryBackgroundWorker extends AsyncTask<Void, Void, Void> {
 
     }
 
-    @Override
-    protected void onProgressUpdate(Void... values) {
-        super.onProgressUpdate(values);
-    }
+
 
 }

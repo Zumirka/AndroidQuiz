@@ -26,7 +26,6 @@ import java.net.UnknownHostException;
 
 public class RegistredBackgroundWorker extends AsyncTask<String, Void, String> {
     Context ctx;
-    String[] data;
     RegisterActivity re;
     ProgressDialog dialog;
     String login;
@@ -134,12 +133,5 @@ public class RegistredBackgroundWorker extends AsyncTask<String, Void, String> {
         }
     }
 
-    @Override
-    protected void onProgressUpdate(Void... values) {
-        super.onProgressUpdate(values);
-    }
 
-    public String[] getData() {
-        return data;
-    }
 }

@@ -142,8 +142,5 @@ public class GetStatisticBackgroundWorker extends AsyncTask<Void, Void, Void> {
         statisticActivity.setCategory(statsList);
     }
 
-    protected void onProgressUpdate(Void... values) {
-        super.onProgressUpdate(values);
-    }
 }
 

@@ -161,10 +161,7 @@ public class TestDownloadBackgroundWorker extends AsyncTask<Void, Void, Void> {
 
     }
 
-    @Override
-    protected void onProgressUpdate(Void... values) {
-        super.onProgressUpdate(values);
-    }
+
 
     private void ShuffleAnswears() {
         for (int i = 0; i < test.getQuestions().size(); i++) {
