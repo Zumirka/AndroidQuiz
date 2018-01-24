@@ -54,7 +54,6 @@ public class StatisticActivity extends AppCompatActivity {
     ArrayList<Entry> entries;
     ArrayList<String> pieEntryLabels;
     int correctAnswear = 0, pointsCount = 0;
-    LineChart lineChart;
     TextView emptyTableTxt;
     int buttonId;
     public DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {

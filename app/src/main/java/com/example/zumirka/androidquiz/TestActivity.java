@@ -76,7 +76,7 @@ public class TestActivity extends AppCompatActivity {
         createTest();
 
         if (canCreateTest) {
-            InitializeControls();
+            initializeControls();
         }
 
 
@@ -234,7 +234,7 @@ public class TestActivity extends AppCompatActivity {
         handler.removeCallbacks(updateTimeThread);
     }
 
-    private void InitializeControls() {
+    private void initializeControls() {
 
         clock = findViewById(R.id.ClockView);
         questionText = findViewById(R.id.Question);
